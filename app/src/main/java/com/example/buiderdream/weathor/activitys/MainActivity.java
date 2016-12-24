@@ -35,18 +35,18 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
-       // saveCity();
+        saveCity();
         initView();
     }
 //测试添加静态用户收藏城市后期删除
     private void saveCity() {
         cityList = new ArrayList<>();
         City city1 = new City();
-        city1.setCityName("山西");
+        city1.setCityName("太原");
         City city2 = new City();
         city2.setCityName("上海");
         City city3 = new City();
-        city3.setCityName("乌鲁木齐");
+        city3.setCityName("北京");
         cityList.add(city1);
         cityList.add(city2);
         cityList.add(city3);

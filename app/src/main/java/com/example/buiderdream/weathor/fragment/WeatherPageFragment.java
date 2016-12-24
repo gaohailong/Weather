@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.buiderdream.weathor.R;
@@ -44,6 +45,11 @@ public class WeatherPageFragment extends Fragment {
     private View weatherPageFragment;
     private WeatherPageFragmentHandler handler;
 
+    private TextView tv_cityName;  //城市名
+    private TextView tv_actualTemperature;  //实时温度
+    private TextView tv_weather;  //天气情况
+    private TextView tv_temperature;  //最高温度和最低温度
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,10 +60,17 @@ public class WeatherPageFragment extends Fragment {
             return null;
         } else {
             weatherPageFragment = inflater.inflate(R.layout.fragment_weatherpage, container, false);
-            String name = cityList.get(FragmentPagerItem.getPosition(getArguments())).getCityName();
-            doRequestData("北京");
+            initView();
+            doRequestData(cityList.get(FragmentPagerItem.getPosition(getArguments())).getCityName());
             return weatherPageFragment;
         }
+    }
+
+    private void initView() {
+        tv_cityName = (TextView) weatherPageFragment.findViewById(R.id.tv_cityName);
+        tv_actualTemperature = (TextView) weatherPageFragment.findViewById(R.id.tv_actualTemperature);
+        tv_weather = (TextView) weatherPageFragment.findViewById(R.id.tv_weather);
+        tv_temperature = (TextView) weatherPageFragment.findViewById(R.id.tv_temperature);
     }
 
     private void doRequestData(String cityName) {
@@ -93,7 +106,11 @@ public class WeatherPageFragment extends Fragment {
      * 更新界面
      */
     private void upDataView() {
-        Toast.makeText(context, weather.getNow().getWind().getDir(),Toast.LENGTH_SHORT).show();
+        tv_cityName.setText( weather.getBasic().getCity());
+        tv_actualTemperature.setText(weather.getNow().getFl()+"°");
+        tv_weather.setText(weather.getNow().getCond().getTxt());
+        tv_temperature.setText(weather.getDaily_forecast().get(0).getTmp().getMin()+"~"+weather.getDaily_forecast().get(0).getTmp().getMax());
+
     }
 
     /**
