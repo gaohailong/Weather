@@ -7,9 +7,4 @@
 /build
 /captures
 .externalNativeBuild
-
-./idea
-gradle/*
-build
-settings.gradle
-local.properties
+s
