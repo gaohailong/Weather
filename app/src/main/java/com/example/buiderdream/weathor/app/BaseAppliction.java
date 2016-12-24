@@ -12,8 +12,9 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 /**
  * Created by Administrator on 2016/12/22.
+ * 全局配置
+ * @author 李秉龙
  */
-
 public class BaseAppliction extends Application {
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @SuppressWarnings("unused")
