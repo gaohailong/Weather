@@ -9,8 +9,10 @@ import android.view.WindowManager;
 
 import com.ant.liao.GifView;
 import com.example.buiderdream.weathor.R;
+import com.example.buiderdream.weathor.constants.ConstantUtils;
 import com.example.buiderdream.weathor.entitys.City;
 import com.example.buiderdream.weathor.fragment.WeatherPageFragment;
+import com.example.buiderdream.weathor.utils.SharePreferencesUtil;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
@@ -33,6 +35,26 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
+       // saveCity();
+        initView();
+    }
+//测试添加静态用户收藏城市后期删除
+    private void saveCity() {
+        cityList = new ArrayList<>();
+        City city1 = new City();
+        city1.setCityName("山西");
+        City city2 = new City();
+        city2.setCityName("上海");
+        City city3 = new City();
+        city3.setCityName("乌鲁木齐");
+        cityList.add(city1);
+        cityList.add(city2);
+        cityList.add(city3);
+        SharePreferencesUtil.saveObject(context,ConstantUtils.USER_COLLECT_CITY,cityList);
+    }
+
+    private void initView() {
+        vp_cityWeather = (ViewPager) this.findViewById(R.id.vp_cityWeather);
         git_background = (GifView) this.findViewById(R.id.gif_background);
         // 设置Gif图片源
         git_background.setGifImage(R.drawable.gif_sunny);
@@ -44,26 +66,12 @@ public class MainActivity extends FragmentActivity {
         git_background.setShowDimension(width, height);
         // 设置加载方式：先加载后显示、边加载边显示、只显示第一帧再显示
         git_background.setGifImageType(GifView.GifImageType.COVER);
-        initView();
-    }
-
-    private void initView() {
-        vp_cityWeather = (ViewPager) this.findViewById(R.id.vp_cityWeather);
-
         initFragmentList();
-
-
     }
 
     private void initFragmentList() {
         creater = FragmentPagerItems.with(context);
-        cityList = new ArrayList<>();
-        for (int i = 0; i<3;i++){
-            City city = new City();
-            city.setCityName("aaaa"+i);
-            cityList.add(city);
-        }
-        //        将节点添加到标题中
+        initUserCollectCity();
         for (int i = 0; i < cityList.size(); i++) {
             creater.add(cityList.get(i).getCityName(), WeatherPageFragment.class);
         }
@@ -73,5 +81,16 @@ public class MainActivity extends FragmentActivity {
 
     }
 
-
+    /**
+     *  从SharePreferences中读取用户收藏的城市，如果没有初始化为北京
+     */
+       public void initUserCollectCity() {
+        cityList = (List<City>) SharePreferencesUtil.readObject(context, ConstantUtils.USER_COLLECT_CITY);
+        if (cityList==null||cityList.size()==0){
+            cityList = new ArrayList<>();
+            City city = new City();
+            city.setCityName("北京");
+            cityList.add(city);
+        }
+    }
 }
