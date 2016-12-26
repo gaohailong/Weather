@@ -15,7 +15,10 @@ import com.example.buiderdream.weathor.utils.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 用户添加的城市列表
+ * @author 文捷
+ */
 public class CityListMgrActivity extends AppCompatActivity {
     private ListView listView;
     private List<City> cityList;
@@ -46,6 +49,7 @@ public class CityListMgrActivity extends AppCompatActivity {
             city.setCityName("北京");
             cityList.add(city);
         }
+        //给listView加载数据的adapter
         adapter = new CommonAdapter<City>(CityListMgrActivity.this,cityList,R.layout.item_city_list) {
             @Override
             public void convert(ViewHolder helper, City item) {

@@ -33,6 +33,11 @@ import java.util.Map;
 
 import okhttp3.Request;
 
+/**
+ * 网络数据所支持的全部城市列表
+ *
+ * @author 文捷
+ */
 public class AllCityListActivity extends AppCompatActivity {
     File dbFile = new File("data" + File.separator + "data" + File.separator
             + "com.example.myweather" + File.separator + "databases"
@@ -46,6 +51,9 @@ public class AllCityListActivity extends AppCompatActivity {
 
     CityDBHelper cityDB = new CityDBHelper(AllCityListActivity.this);
     List<CityInfo> cityInfos = new ArrayList<CityInfo>();
+    /**
+     * 异步任务结束后通知进行数据库添加操作，只在第一次执行添加
+     */
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -68,6 +76,10 @@ public class AllCityListActivity extends AppCompatActivity {
         initView();
         initListView();
     }
+
+    /**
+     * 加载list数据，数据库查询操作
+     */
     private void initListView() {
 
         if (!dbFile.exists()) {
@@ -84,6 +96,11 @@ public class AllCityListActivity extends AppCompatActivity {
 
 
     }
+
+    /**
+     *
+     * 异步获取网络数据，数据解析并封装到List中
+     */
     private void doRequestData() {
         OkHttpClientManager manager = OkHttpClientManager.getInstance();
         Map<String, String> map = new HashMap<>();
@@ -132,6 +149,12 @@ public class AllCityListActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * 保存用户点击的item城市到SharePreferences，已有的城市不再添加
+     * @param string
+     *
+     */
     public void saveCitys(String string){
         collecCity = (List<City>) SharePreferencesUtil.readObject(AllCityListActivity.this, ConstantUtils.USER_COLLECT_CITY);
         City city = new City();
@@ -151,11 +174,14 @@ public class AllCityListActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * 搜索按钮触发列表的相应改变
+     * @param v
+     */
     public void search_click(View v) {
         // 搜索
         Toast.makeText(AllCityListActivity.this, "------------", Toast.LENGTH_SHORT).show();
         String searchCity = searchEdit.getText().toString();
-        //if (searchCity!=""||searchCity.length()!=0||!searchCity.isEmpty()) {
         cityInfos = cityDB.findCitys();
         Toast.makeText(AllCityListActivity.this, searchCity, Toast.LENGTH_SHORT).show();
 
@@ -169,7 +195,6 @@ public class AllCityListActivity extends AppCompatActivity {
         cityNameAdapter = new ArrayAdapter<String>(AllCityListActivity.this, android.R.layout.simple_list_item_1, cityNameList);
         listView.setAdapter(cityNameAdapter);
         cityNameAdapter.notifyDataSetChanged();
-        //}
 
 
     }
