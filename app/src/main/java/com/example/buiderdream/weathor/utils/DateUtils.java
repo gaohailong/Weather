@@ -1,5 +1,10 @@
 package com.example.buiderdream.weathor.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by Administrator on 2016/12/15.
  * @author 李秉龙
@@ -28,5 +33,55 @@ public class DateUtils {
             timeStr = "刚刚";
         }
         return timeStr;
+    }
+
+    /**
+     * 获取星期
+     * @param dateStr
+     * @return
+     */
+        public static String getWeek(String dateStr) {
+        Date date = null;
+        try
+        {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            date  = sdf.parse(dateStr);
+        }
+        catch (ParseException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        dayOfWeek = dayOfWeek - 1;
+        if (dayOfWeek == 0) {
+            dayOfWeek = 7;
+        }
+            String week = null;
+            switch (dayOfWeek){
+                case 1:
+                    week = "星期一";
+                    break;
+                case 2:
+                    week = "星期二";
+                    break;
+                case 3:
+                    week = "星期三";
+                    break;
+                case 4:
+                    week = "星期四";
+                    break;
+                case 5:
+                    week = "星期五";
+                    break;
+                case 6:
+                    week = "星期六";
+                    break;
+                default:
+                    week = "星期天";
+                    break;
+            }
+        return week;
     }
 }
