@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class WeatherPageFragment extends Fragment {
     private View weatherPageFragment;
     private WeatherPageFragmentHandler handler;
 
+    private ImageView img_addCity;
     private TextView tv_cityName;  //城市名
     private TextView tv_actualTemperature;  //实时温度
     private TextView tv_weather;  //天气情况
@@ -67,10 +69,17 @@ public class WeatherPageFragment extends Fragment {
     }
 
     private void initView() {
+        img_addCity = (ImageView) weatherPageFragment.findViewById(R.id.img_addCity);
         tv_cityName = (TextView) weatherPageFragment.findViewById(R.id.tv_cityName);
         tv_actualTemperature = (TextView) weatherPageFragment.findViewById(R.id.tv_actualTemperature);
         tv_weather = (TextView) weatherPageFragment.findViewById(R.id.tv_weather);
         tv_temperature = (TextView) weatherPageFragment.findViewById(R.id.tv_temperature);
+        img_addCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     private void doRequestData(String cityName) {
