@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2016/12/17.
+ * @author 李秉龙
+ * gson工具类
  */
 
 public class GsonUtils {

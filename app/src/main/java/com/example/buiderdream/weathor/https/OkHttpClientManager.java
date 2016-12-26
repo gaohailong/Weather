@@ -21,6 +21,7 @@ import okhttp3.Response;
 
 /**
  * Created by Administrator on 2016/12/15.
+ * @author 李秉龙
  * okhttp3 工具类的封装
  */
 
@@ -150,9 +151,9 @@ public class OkHttpClientManager {
     private static String formatParams(Map<String,String> params){
         StringBuffer buffer = new StringBuffer();
         for (Map.Entry<String,String> entry : params.entrySet()) {
-            buffer.append(entry.getKey()).append("=").append(entry.getValue());
+            buffer.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
         }
-        return buffer.toString();
+        return buffer.substring(0,buffer.length()-1).toString();
     }
     /**
      * 为HttpGet 的 url 方便的添加多个name value 参数。

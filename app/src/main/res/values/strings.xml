@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Weathor</string>
+    <string name="prediction">预报</string>
+    <string name="today">今天</string>
 </resources>

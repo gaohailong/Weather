@@ -4,7 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.buiderdream.weathor.R;
-
+/**
+ * Created by Administrator on 2016/12/22.
+ * @author 李秉龙
+ */
 public class BaseActivity extends AppCompatActivity {
 
     @Override
