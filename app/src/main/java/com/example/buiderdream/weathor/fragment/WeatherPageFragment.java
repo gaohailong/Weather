@@ -1,6 +1,7 @@
 package com.example.buiderdream.weathor.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.buiderdream.weathor.R;
+import com.example.buiderdream.weathor.activitys.AllCityListActivity;
+import com.example.buiderdream.weathor.activitys.CityListMgrActivity;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
 import com.example.buiderdream.weathor.entitys.City;
 import com.example.buiderdream.weathor.entitys.HeWeather;
@@ -77,6 +80,8 @@ public class WeatherPageFragment extends Fragment {
         img_addCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getContext(), CityListMgrActivity.class);
+                startActivity(intent);
 
             }
         });

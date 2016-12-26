@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".app.BaseAppliction"
         android:allowBackup="true"
@@ -19,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".base.BaseActivity" />
-        <activity android:name=".activitys.AllCityListActivity"></activity>
+        <activity android:name=".activitys.AllCityListActivity" />
+        <activity android:name=".activitys.CityListMgrActivity"></activity>
     </application>
 
 </manifest>

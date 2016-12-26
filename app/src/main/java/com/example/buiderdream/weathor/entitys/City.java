@@ -6,6 +6,7 @@ import java.io.Serializable;
  * @author 李秉龙
  */
 public class City implements Serializable{
+
     private String cityName;
 
     public String getCityName() {

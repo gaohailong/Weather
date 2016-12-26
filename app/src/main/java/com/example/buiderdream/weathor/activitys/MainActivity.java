@@ -51,6 +51,7 @@ public class MainActivity extends FragmentActivity {
         cityList.add(city2);
         cityList.add(city3);
         SharePreferencesUtil.saveObject(context,ConstantUtils.USER_COLLECT_CITY,cityList);
+
     }
 
     private void initView() {
