@@ -25,10 +25,14 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
             android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:gravity="center"
             android:layout_toRightOf="@+id/img_detailWeather">
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -36,6 +40,7 @@
                     android:textSize="@dimen/mainFontSize"
                     />
                 <TextView
+                    android:id="@+id/tv_detailWeather"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -43,7 +48,66 @@
                     android:textSize="@dimen/mainFontSize"
                     />
             </RelativeLayout>
-        </LinearLayout>
-
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="体感温度"
+                    android:textSize="@dimen/mainFontSize"
+                    />
+                <TextView
+                    android:id="@+id/tv_detailTemp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="今日预报"
+                    android:textSize="@dimen/mainFontSize"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="空气湿度"
+                    android:textSize="@dimen/mainFontSize"
+                    />
+                <TextView
+                    android:id="@+id/tv_detailHumidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="今日预报"
+                    android:textSize="@dimen/mainFontSize"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="今日预报"
+                    android:textSize="@dimen/mainFontSize"
+                    />
+                <TextView
+                    android:id="@+id/tv_detailWind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="风向风力"
+                    android:textSize="@dimen/mainFontSize"
+                    />
+            </RelativeLayout>
+         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

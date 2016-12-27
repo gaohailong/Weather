@@ -18,21 +18,19 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.example.buiderdream.weathor.R;
-import com.example.buiderdream.weathor.activitys.AllCityListActivity;
 import com.example.buiderdream.weathor.activitys.CityListMgrActivity;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
 import com.example.buiderdream.weathor.entitys.City;
 import com.example.buiderdream.weathor.entitys.HeWeather;
 import com.example.buiderdream.weathor.https.OkHttpClientManager;
 import com.example.buiderdream.weathor.utils.DateUtils;
-import com.example.buiderdream.weathor.utils.DeviceUtil;
 import com.example.buiderdream.weathor.utils.SharePreferencesUtil;
 import com.google.gson.Gson;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -95,12 +93,24 @@ public class WeatherPageFragment extends Fragment {
     private TextView tv_fourWeather;   //大大后天的天气
     private ImageView img_fourWeather;  //大大后天的天气图片
 
-    private RelativeLayout rl_content;
-    private RelativeLayout rl_air;
-    private RelativeLayout rl_center;
-    private RelativeLayout rl_bottomView;
-    private LinearLayout gv_fourDay;
+    private ImageView img_detailWeather;  //天气图片
+    private TextView tv_detailWeather;   //详细的今日预报
+    private TextView tv_detailTemp;   //详细的体感温度
+    private TextView tv_detailHumidity;   //详细的空气湿度
+    private TextView tv_detailWind;   //详细的风力风向
 
+    private TextView detail_tv_pm25;  //pm25
+    private TextView detail_tv_pm10;  //pm10
+    private TextView detail_tv_so2;  //so2
+    private TextView detail_tv_NO2;  //no2
+    private TextView detail_tv_O3;  //o3
+    private TextView detail_tv_CO;  //co
+
+    private RelativeLayout rl_content;     //天气数据
+    private RelativeLayout rl_air;          //空气质量
+    private RelativeLayout rl_center;       //中心标题
+    private RelativeLayout rl_bottomView;   //底部标题
+    private LinearLayout gv_fourDay;         //未来四天数据
 
 
     @Override
@@ -164,11 +174,25 @@ public class WeatherPageFragment extends Fragment {
         tv_fourTempMin = (TextView) weatherPageFragment.findViewById(R.id.tv_fourTempMin);
         tv_fourWeather = (TextView) weatherPageFragment.findViewById(R.id.tv_fourWeather);
         img_fourWeather = (ImageView) weatherPageFragment.findViewById(R.id.img_fourWeather);
+
+        img_detailWeather = (ImageView) weatherPageFragment.findViewById(R.id.img_detailWeather);
+        tv_detailWeather = (TextView) weatherPageFragment.findViewById(R.id.tv_detailWeather);
+        tv_detailTemp = (TextView) weatherPageFragment.findViewById(R.id.tv_detailTemp);
+        tv_detailHumidity = (TextView) weatherPageFragment.findViewById(R.id.tv_detailHumidity);
+        tv_detailWind = (TextView) weatherPageFragment.findViewById(R.id.tv_detailWind);
+
         rl_content = (RelativeLayout) this.weatherPageFragment.findViewById(R.id.rl_content);
         rl_air = (RelativeLayout) this.weatherPageFragment.findViewById(R.id.rl_air);
         rl_center = (RelativeLayout) this.weatherPageFragment.findViewById(R.id.rl_center);
         rl_bottomView = (RelativeLayout) this.weatherPageFragment.findViewById(R.id.rl_bottomView);
         gv_fourDay = (LinearLayout) this.weatherPageFragment.findViewById(R.id.gv_fourDay);
+
+        detail_tv_pm25 = (TextView) weatherPageFragment.findViewById(R.id.detail_tv_pm25);
+        detail_tv_pm10 = (TextView) weatherPageFragment.findViewById(R.id.detail_tv_pm10);
+        detail_tv_so2 = (TextView) weatherPageFragment.findViewById(R.id.detail_tv_so2);
+        detail_tv_NO2 = (TextView) weatherPageFragment.findViewById(R.id.detail_tv_NO2);
+        detail_tv_O3 = (TextView) weatherPageFragment.findViewById(R.id.detail_tv_O3);
+        detail_tv_CO = (TextView) weatherPageFragment.findViewById(R.id.detail_tv_CO);
 
 
         ViewGroup.LayoutParams params = rl_content.getLayoutParams();
@@ -179,8 +203,8 @@ public class WeatherPageFragment extends Fragment {
         int height = wm.getDefaultDisplay().getHeight();
         params.width = width;
         //屏幕适配
-        params.height = height-img_addCity.getLayoutParams().height*2-rl_air.getLayoutParams().height
-                -rl_bottomView.getLayoutParams().height*2-rl_center.getLayoutParams().height-gv_fourDay.getLayoutParams().height;
+        params.height = height - img_addCity.getLayoutParams().height * 2 - rl_air.getLayoutParams().height
+                - rl_bottomView.getLayoutParams().height * 2 - rl_center.getLayoutParams().height - gv_fourDay.getLayoutParams().height;
         rl_content.setLayoutParams(params);
 
     }
@@ -220,39 +244,62 @@ public class WeatherPageFragment extends Fragment {
      */
     private void upDataView() {
         img_weather.setImageResource(setWeatherImg(weather.getDaily_forecast().get(0).getCond().getCode_d()));
-        tv_cityName.setText( weather.getBasic().getCity());
-        tv_actualTemperature.setText(weather.getNow().getFl()+"°");
+        tv_cityName.setText(weather.getBasic().getCity());
+        tv_actualTemperature.setText(weather.getNow().getTmp() + "°");
         tv_weather.setText(weather.getNow().getCond().getTxt());
-        tv_temperature.setText(weather.getDaily_forecast().get(0).getTmp().getMin()+"~"+weather.getDaily_forecast().get(0).getTmp().getMax());
+        tv_temperature.setText(weather.getDaily_forecast().get(0).getTmp().getMin() + "~" + weather.getDaily_forecast().get(0).getTmp().getMax());
         img_notification.setImageDrawable(getAirHintImg(weather.getAqi().getCity().getAqi()));
         tv_airGrade.setText(weather.getSuggestion().getAir().getBrf());
         tv_airHint.setText(weather.getSuggestion().getAir().getTxt());
         tv_week.setText(DateUtils.getWeek(weather.getDaily_forecast().get(0).getDate()));
-        tv_upDataTime.setText(weather.getBasic().getUpdate().getLoc().substring(10,16)+"发布");
+        tv_upDataTime.setText(weather.getBasic().getUpdate().getLoc().substring(10, 16) + "发布");
 
         tv_oneWeek.setText(DateUtils.getWeek(weather.getDaily_forecast().get(1).getDate()));
-        tv_oneTempMax.setText(weather.getDaily_forecast().get(1).getTmp().getMax()+"°");
-        tv_oneTempMin.setText(weather.getDaily_forecast().get(1).getTmp().getMin()+"°");
+        tv_oneTempMax.setText(weather.getDaily_forecast().get(1).getTmp().getMax() + "°");
+        tv_oneTempMin.setText(weather.getDaily_forecast().get(1).getTmp().getMin() + "°");
         tv_oneWeather.setText(weather.getDaily_forecast().get(1).getCond().getTxt_d());
         img_oneWeather.setImageResource(setWeatherImg(weather.getDaily_forecast().get(1).getCond().getCode_d()));
 
         tv_twoWeek.setText(DateUtils.getWeek(weather.getDaily_forecast().get(2).getDate()));
-        tv_twoTempMax.setText(weather.getDaily_forecast().get(2).getTmp().getMax()+"°");
-        tv_twoTempMin.setText(weather.getDaily_forecast().get(2).getTmp().getMin()+"°");
+        tv_twoTempMax.setText(weather.getDaily_forecast().get(2).getTmp().getMax() + "°");
+        tv_twoTempMin.setText(weather.getDaily_forecast().get(2).getTmp().getMin() + "°");
         tv_twoWeather.setText(weather.getDaily_forecast().get(2).getCond().getTxt_d());
         img_twoWeather.setImageResource(setWeatherImg(weather.getDaily_forecast().get(2).getCond().getCode_d()));
 
         tv_threeWeek.setText(DateUtils.getWeek(weather.getDaily_forecast().get(3).getDate()));
-        tv_threeTempMax.setText(weather.getDaily_forecast().get(3).getTmp().getMax()+"°");
-        tv_threeTempMin.setText(weather.getDaily_forecast().get(3).getTmp().getMin()+"°");
+        tv_threeTempMax.setText(weather.getDaily_forecast().get(3).getTmp().getMax() + "°");
+        tv_threeTempMin.setText(weather.getDaily_forecast().get(3).getTmp().getMin() + "°");
         tv_threeWeather.setText(weather.getDaily_forecast().get(3).getCond().getTxt_d());
         img_threeWeather.setImageResource(setWeatherImg(weather.getDaily_forecast().get(3).getCond().getCode_d()));
 
         tv_fourWeek.setText(DateUtils.getWeek(weather.getDaily_forecast().get(4).getDate()));
-        tv_fourTempMax.setText(weather.getDaily_forecast().get(4).getTmp().getMax()+"°");
-        tv_fourTempMin.setText(weather.getDaily_forecast().get(4).getTmp().getMin()+"°");
+        tv_fourTempMax.setText(weather.getDaily_forecast().get(4).getTmp().getMax() + "°");
+        tv_fourTempMin.setText(weather.getDaily_forecast().get(4).getTmp().getMin() + "°");
         tv_fourWeather.setText(weather.getDaily_forecast().get(4).getCond().getTxt_d());
         img_fourWeather.setImageResource(setWeatherImg(weather.getDaily_forecast().get(4).getCond().getCode_d()));
+
+        img_detailWeather.setImageResource(setWeatherImg(weather.getDaily_forecast().get(0).getCond().getCode_d()));
+        tv_detailWeather.setText(weather.getNow().getCond().getTxt());
+        tv_detailTemp.setText(weather.getNow().getFl() + "°");
+        tv_detailHumidity.setText(weather.getNow().getHum());
+        tv_detailWind.setText(weather.getNow().getWind().getDir() + weather.getNow().getWind().getSc());
+
+        if (weather.getAqi()==null||weather.getAqi().equals("")){
+            detail_tv_pm25.setText("暂无数据");
+            detail_tv_pm10.setText("暂无数据");
+            detail_tv_so2.setText("暂无数据");
+            detail_tv_NO2.setText("暂无数据");
+            detail_tv_O3.setText("暂无数据");
+            detail_tv_CO.setText("暂无数据");
+        }else {
+            detail_tv_pm25.setText(weather.getAqi().getCity().getPm25());
+            detail_tv_pm10.setText(weather.getAqi().getCity().getPm10());
+            detail_tv_so2.setText(weather.getAqi().getCity().getSo2());
+            detail_tv_NO2.setText(weather.getAqi().getCity().getNo2());
+            detail_tv_O3.setText(weather.getAqi().getCity().getO3());
+            detail_tv_CO.setText(weather.getAqi().getCity().getCo());
+        }
+
     }
 
     /**
@@ -269,29 +316,31 @@ public class WeatherPageFragment extends Fragment {
     }
 
     /**
-     *设置空气质量的指示图片
+     * 设置空气质量的指示图片
+     *
      * @param brf
      * @return
      */
     private Drawable getAirHintImg(String brf) {
         int index = Integer.valueOf(brf);
-        Drawable airHintImg = ContextCompat.getDrawable(context,R.mipmap.biz_plugin_weather_0_50);
-       if (index<=50){
-           airHintImg = ContextCompat.getDrawable(context,R.mipmap.biz_plugin_weather_0_50);
-       }else if (50<index&&index<=100){
-           airHintImg = ContextCompat.getDrawable(context,R.mipmap.biz_plugin_weather_51_100);
-       }else if (100<index&&index<=150){
-           airHintImg = ContextCompat.getDrawable(context,R.mipmap.biz_plugin_weather_101_150);
-       }else if (150<index&&index<=200){
-           airHintImg = ContextCompat.getDrawable(context,R.mipmap.biz_plugin_weather_151_200);
-       }else if (200<index&&index<=300){
-           airHintImg = ContextCompat.getDrawable(context,R.mipmap.biz_plugin_weather_201_300);
-       }
+        Drawable airHintImg = ContextCompat.getDrawable(context, R.mipmap.biz_plugin_weather_0_50);
+        if (index <= 50) {
+            airHintImg = ContextCompat.getDrawable(context, R.mipmap.biz_plugin_weather_0_50);
+        } else if (50 < index && index <= 100) {
+            airHintImg = ContextCompat.getDrawable(context, R.mipmap.biz_plugin_weather_51_100);
+        } else if (100 < index && index <= 150) {
+            airHintImg = ContextCompat.getDrawable(context, R.mipmap.biz_plugin_weather_101_150);
+        } else if (150 < index && index <= 200) {
+            airHintImg = ContextCompat.getDrawable(context, R.mipmap.biz_plugin_weather_151_200);
+        } else if (200 < index && index <= 300) {
+            airHintImg = ContextCompat.getDrawable(context, R.mipmap.biz_plugin_weather_201_300);
+        }
         return airHintImg;
     }
 
     /**
      * 设置天气图片
+     *
      * @param id
      * @return
      */

@@ -149,6 +149,8 @@ public class MainActivity extends FragmentActivity {
                 JSONObject object1 = object.getJSONObject("result");
                 JSONObject object2 =object1.getJSONObject("ext");
                 district = object2.getString("district") ;
+                district = district.substring(0,district.length()-1);
+
                 handler.sendEmptyMessage(ConstantUtils.JUHELATLON_GET_DATA);
             }
         });
@@ -219,7 +221,7 @@ public class MainActivity extends FragmentActivity {
             super.handleMessage(msg);
             switch (msg.what){
                 case ConstantUtils.JUHELATLON_GET_DATA:
-
+                    Toast.makeText(context,district+"jjjjj",Toast.LENGTH_SHORT).show();
                     break;
             }
         }
