@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.example.buiderdream.weathor.R;
+import com.example.buiderdream.weathor.base.BaseActivity;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
 import com.example.buiderdream.weathor.entitys.City;
 import com.example.buiderdream.weathor.utils.CommonAdapter;
@@ -19,7 +20,7 @@ import java.util.List;
  * 用户添加的城市列表
  * @author 文捷
  */
-public class CityListMgrActivity extends AppCompatActivity {
+public class CityListMgrActivity extends BaseActivity {
     private ListView listView;
     private List<City> cityList;
     private CommonAdapter<City> adapter;

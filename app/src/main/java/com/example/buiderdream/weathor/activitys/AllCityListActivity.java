@@ -11,9 +11,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.buiderdream.weathor.R;
+import com.example.buiderdream.weathor.base.BaseActivity;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
 import com.example.buiderdream.weathor.entitys.City;
 import com.example.buiderdream.weathor.entitys.CityInfo;
@@ -38,7 +40,7 @@ import okhttp3.Request;
  *
  * @author 文捷
  */
-public class AllCityListActivity extends AppCompatActivity {
+public class AllCityListActivity extends BaseActivity {
     File dbFile = new File("data" + File.separator + "data" + File.separator
             + "com.example.myweather" + File.separator + "databases"
             + File.separator + "citys.db");
@@ -48,7 +50,7 @@ public class AllCityListActivity extends AppCompatActivity {
     private List<String> cityNameList = new ArrayList<String>();
     private ArrayAdapter<String> cityNameAdapter;
     List<City> collecCity = new ArrayList<City>();
-
+    private ProgressBar pro_all_city;
     CityDBHelper cityDB = new CityDBHelper(AllCityListActivity.this);
     List<CityInfo> cityInfos = new ArrayList<CityInfo>();
     /**
@@ -64,6 +66,7 @@ public class AllCityListActivity extends AppCompatActivity {
                         cityDB.AddCitys(cityInfos.get(i));
                     }
                 }
+                notifyListAdapter();
 
             }
         }
@@ -82,9 +85,24 @@ public class AllCityListActivity extends AppCompatActivity {
      */
     private void initListView() {
 
-        if (!dbFile.exists()) {
+        if (!dbFile.exists()||cityDB.findCitys().size()==0) {
             doRequestData();
+<<<<<<< HEAD
+=======
+
+        }else{
+            pro_all_city.setVisibility(View.GONE);
+            notifyListAdapter();
+>>>>>>> 68c41d4de7887719ac21797f85529da5d2c6b2cc
         }
+
+
+
+
+
+    }
+
+    private void notifyListAdapter() {
         cityInfos = cityDB.findCitys();
         for (int i = 0; i < cityInfos.size(); i++) {
             cityNameList.add(cityInfos.get(i).getDistrict()+"-"+cityInfos.get(i).getCity());
@@ -92,7 +110,7 @@ public class AllCityListActivity extends AppCompatActivity {
         cityNameAdapter = new ArrayAdapter<String>(AllCityListActivity.this, android.R.layout.simple_list_item_1, cityNameList);
         listView.setAdapter(cityNameAdapter);
         cityNameAdapter.notifyDataSetChanged();
-
+        pro_all_city.setVisibility(View.GONE);
 
     }
 
@@ -101,6 +119,8 @@ public class AllCityListActivity extends AppCompatActivity {
      * 异步获取网络数据，数据解析并封装到List中
      */
     private void doRequestData() {
+        pro_all_city.setVisibility(View.VISIBLE);
+
         OkHttpClientManager manager = OkHttpClientManager.getInstance();
         Map<String, String> map = new HashMap<>();
         map.put("key", ConstantUtils.JUHEWEATHER_KEY);
@@ -126,6 +146,7 @@ public class AllCityListActivity extends AppCompatActivity {
                     cityInfo.setDistrict(object.getString("district"));
                     cityInfos.add(cityInfo);
                 }
+
                 Message message = new Message();
                 message.what = 1;
                 message.obj = cityInfos;
@@ -135,6 +156,8 @@ public class AllCityListActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        pro_all_city = (ProgressBar) findViewById(R.id.pro_all_city);
+
         listView = (ListView) findViewById(R.id.city_list);
         searchEdit = (EditText) findViewById(R.id.searchEdit);
         //listView设置监听事件，点击item后将对象存入sharedPreference
