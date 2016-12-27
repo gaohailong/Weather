@@ -28,6 +28,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name=".appwidget.WeatherWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/cofig_widget" />
+        </receiver>
+
+        <service
+            android:name=".service.WeatherService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
