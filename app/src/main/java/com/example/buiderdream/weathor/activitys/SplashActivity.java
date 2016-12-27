@@ -19,6 +19,7 @@ import com.example.buiderdream.weathor.constants.ConstantUtils;
 import com.example.buiderdream.weathor.entitys.City;
 import com.example.buiderdream.weathor.entitys.HeWeather;
 import com.example.buiderdream.weathor.https.OkHttpClientManager;
+import com.example.buiderdream.weathor.utils.NetWorkUtils;
 import com.example.buiderdream.weathor.utils.SharePreferencesUtil;
 import com.google.gson.Gson;
 
@@ -51,6 +52,11 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
         context = this;
         handler = new SplashHandler();
+       if (NetWorkUtils.GetNetype(context)==-1){
+           Toast.makeText(context,"当前无网络连接！",Toast.LENGTH_SHORT).show();
+           nextActivity();
+           return;
+       }
         getLoctionCity();
     }
     /**
@@ -194,9 +200,7 @@ public class SplashActivity extends BaseActivity {
                 case ConstantUtils.SPLASH_GET_DATA:
                     //保存当前城市数据
                     SharePreferencesUtil.saveObject(context,ConstantUtils.LOCATION_CITY_WEATHER,weather);
-                    Intent intent = new Intent(SplashActivity.this,MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    nextActivity();
                     break;
                 default:
                     break;
@@ -207,7 +211,9 @@ public class SplashActivity extends BaseActivity {
     /**
      * 跳转到下一视图
      */
-    private void nextAcitvity() {
-
+    private void nextActivity() {
+        Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

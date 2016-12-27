@@ -265,9 +265,9 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
      * 更新界面
      */
     private void upDataView() {
-        // 设置Gif图片源
-//   gif_background.setGifImage(UpdataWeatherUtils.setGifImg(weather.getDaily_forecast().get(0).getCond().getCode_d()));
-        // 设置显示的大小，拉伸或者压缩
+//        // 设置Gif图片源
+//        gif_background.setGifImage(UpdataWeatherUtils.setGifImg(weather.getDaily_forecast().get(0).getCond().getCode_d()));
+//        // 设置显示的大小，拉伸或者压缩
 //        WindowManager wm = (WindowManager) context
 //                .getSystemService(Context.WINDOW_SERVICE);
 //        int width = wm.getDefaultDisplay().getWidth();
