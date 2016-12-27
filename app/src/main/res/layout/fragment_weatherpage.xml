@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"git
+    android:layout_height="match_parent"
    >
 
     <TextView
@@ -554,6 +554,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/white"
                             android:text="空气湿度"
                             android:textSize="@dimen/mainFontSize"
                             />
@@ -576,7 +577,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
-                            android:text="今日预报"
+                            android:text="风向风力"
                             android:textSize="@dimen/mainFontSize"
                             />
                         <TextView
