@@ -22,6 +22,7 @@ import com.example.buiderdream.weathor.R;
 import com.example.buiderdream.weathor.base.BaseActivity;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
 import com.example.buiderdream.weathor.entitys.City;
+import com.example.buiderdream.weathor.entitys.HeWeather;
 import com.example.buiderdream.weathor.fragment.WeatherPageFragment;
 import com.example.buiderdream.weathor.https.OkHttpClientManager;
 import com.example.buiderdream.weathor.utils.SharePreferencesUtil;
@@ -29,9 +30,11 @@ import com.google.gson.Gson;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +55,7 @@ public class MainActivity extends FragmentActivity {
     private List<City> cityList;
     private Context context;
     private GifView git_background;
+    private HeWeather weather;
 
     /**
      * 当前位置
@@ -67,45 +71,11 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
-        saveCity();
+        handler = new ManiActivityHandler();
+       // saveCity();
         initView();
+        getLoctionCity();
 
-
-        //得到当前城市的经纬度
-        manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        List<String> providerList = manager.getProviders(true);
-        if (providerList.contains(LocationManager.GPS_PROVIDER)) {
-            provider = LocationManager.GPS_PROVIDER;
-        } else if (providerList.contains(LocationManager.NETWORK_PROVIDER)) {
-            provider = LocationManager.NETWORK_PROVIDER;
-        } else {
-            Toast.makeText(MainActivity.this, "没有", Toast.LENGTH_SHORT).show();
-        }
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Location location = manager.getLastKnownLocation(provider);
-        if (location != null)
-
-        {
-            //纬度
-            Toast.makeText(MainActivity.this,location.getLatitude()+"",Toast.LENGTH_SHORT).show();
-            lat = location.getLatitude()+"";
-            //经度
-            Toast.makeText(MainActivity.this,location.getLongitude()+"",Toast.LENGTH_SHORT).show();
-            lon = location.getLongitude()+"";
-        }
-        manager.requestLocationUpdates(provider,5000,1,locationListener);
-
-        Get_CityName(lat,lon);
-        Toast.makeText(MainActivity.this,district,Toast.LENGTH_SHORT).show();
     }
     LocationListener locationListener = new LocationListener() {
         @Override
@@ -150,27 +120,10 @@ public class MainActivity extends FragmentActivity {
                 JSONObject object2 =object1.getJSONObject("ext");
                 district = object2.getString("district") ;
                 district = district.substring(0,district.length()-1);
-
                 handler.sendEmptyMessage(ConstantUtils.JUHELATLON_GET_DATA);
             }
         });
 
-
-    }
-
-    //测试添加静态用户收藏城市后期删除
-    private void saveCity() {
-        cityList = new ArrayList<>();
-        City city1 = new City();
-        city1.setCityName("太原");
-        City city2 = new City();
-        city2.setCityName("上海");
-        City city3 = new City();
-        city3.setCityName("北京");
-        cityList.add(city1);
-        cityList.add(city2);
-        cityList.add(city3);
-        SharePreferencesUtil.saveObject(context,ConstantUtils.USER_COLLECT_CITY,cityList);
 
     }
 
@@ -187,6 +140,12 @@ public class MainActivity extends FragmentActivity {
         git_background.setShowDimension(width, height);
         // 设置加载方式：先加载后显示、边加载边显示、只显示第一帧再显示
         git_background.setGifImageType(GifView.GifImageType.COVER);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initFragmentList();
     }
 
@@ -215,15 +174,99 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    class  ManiActivityHandler extends Handler{
+    /**
+     * 得到当前位置的经纬度
+     */
+    public void getLoctionCity() {
+        //得到当前城市的经纬度
+        manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        List<String> providerList = manager.getProviders(true);
+        if (providerList.contains(LocationManager.GPS_PROVIDER)) {
+            provider = LocationManager.GPS_PROVIDER;
+        } else if (providerList.contains(LocationManager.NETWORK_PROVIDER)) {
+            provider = LocationManager.NETWORK_PROVIDER;
+        } else {
+            Toast.makeText(MainActivity.this, "没有", Toast.LENGTH_SHORT).show();
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Location location = manager.getLastKnownLocation(provider);
+        if (location != null)
+        {
+            //纬度
+            Toast.makeText(MainActivity.this,location.getLatitude()+"",Toast.LENGTH_SHORT).show();
+            lat = location.getLatitude()+"";
+            //经度
+            Toast.makeText(MainActivity.this,location.getLongitude()+"",Toast.LENGTH_SHORT).show();
+            lon = location.getLongitude()+"";
+        }
+        manager.requestLocationUpdates(provider,5000,1,locationListener);
+        Get_CityName(lat,lon);
+        Toast.makeText(MainActivity.this,district,Toast.LENGTH_SHORT).show();
+    }
+
+    class  ManiActivityHandler extends Handler {
+
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
                 case ConstantUtils.JUHELATLON_GET_DATA:
-                    Toast.makeText(context,district+"jjjjj",Toast.LENGTH_SHORT).show();
+                    doGetJuHeLocation();
+                case ConstantUtils.WEATHERPAGEFRRAGMENT_GET_DATA:
+                   //保存当前城市数据
+                    SharePreferencesUtil.saveObject(context,ConstantUtils.LOCATION_CITY_WEATHER,weather);
                     break;
             }
         }
+    }
+
+    /**
+     * 得到当前城市的数据
+     */
+    private void doGetJuHeLocation() {
+
+        City city = new City();
+        city.setCityName(district);
+        doRequestData(district);
+        cityList = (ArrayList<City>) SharePreferencesUtil.readObject(context,ConstantUtils.USER_COLLECT_CITY);
+        if (cityList==null||cityList.size()==0){
+            cityList = new ArrayList<>();
+            cityList.add(city);
+        }else {
+            if (!cityList.get(0).getCityName().equals(district)){
+                cityList.set(0,city);
+            }
+        }
+        SharePreferencesUtil.saveObject(context, ConstantUtils.USER_COLLECT_CITY,cityList);
+    }
+
+    private void doRequestData(String cityName) {
+        OkHttpClientManager manager = OkHttpClientManager.getInstance();
+        Map<String, String> map = new HashMap<>();
+        map.put("city", cityName);
+        map.put("key", ConstantUtils.HEFENGWEATHER_KEY);
+        String url = OkHttpClientManager.attachHttpGetParams(ConstantUtils.HEFENGWEATHER_URL, map);
+        manager.getAsync(url, new OkHttpClientManager.DataCallBack() {
+            @Override
+            public void requestFailure(Request request, IOException e) {
+            }
+
+            @Override
+            public void requestSuccess(String result) throws Exception {
+                // 将{}中视为是json对象
+                JSONObject jsonObject = new JSONObject(result);
+                // 获取键"weatherinfo"中对应的值
+                JSONArray jsonArray1 = jsonObject
+                        .getJSONArray("HeWeather data service 3.0");
+                JSONObject jsonObject2 = jsonArray1.getJSONObject(0);
+                // 使用jar包解析数据
+                Gson gson = new Gson();
+                weather = gson.fromJson(
+                        jsonObject2.toString(), HeWeather.class);
+                handler.sendEmptyMessage(ConstantUtils.WEATHERPAGEFRRAGMENT_GET_DATA);
+            }
+        });
     }
 }

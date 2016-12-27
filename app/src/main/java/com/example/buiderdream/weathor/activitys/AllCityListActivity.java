@@ -156,7 +156,7 @@ public class AllCityListActivity extends AppCompatActivity {
      *
      */
     public void saveCitys(String string){
-        collecCity = (List<City>) SharePreferencesUtil.readObject(AllCityListActivity.this, ConstantUtils.USER_COLLECT_CITY);
+        collecCity = (ArrayList<City>) SharePreferencesUtil.readObject(AllCityListActivity.this, ConstantUtils.USER_COLLECT_CITY);
         City city = new City();
         city.setCityName(string);
         for(int i = 0;i<collecCity.size();i++){
