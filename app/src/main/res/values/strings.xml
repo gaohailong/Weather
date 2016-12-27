@@ -1,5 +1,22 @@
 <resources>
     <string name="app_name">Weathor</string>
+    <!--天气页面-->
     <string name="prediction">预报</string>
     <string name="today">今天</string>
+    <string name="detail_info">详细信息</string>
+    <string name="weather_prediction">详细信息</string>
+    <string name="today_prediction">今日预报</string>
+    <string name="detail_temp">体感温度</string>
+    <string name="api_humidity">空气湿度</string>
+    <string name="wind">风力风向</string>
+    <!--通用-->
+    <string name="image_notify">图片</string>
+    <!--闪屏页-->
+    <string name="loading_location">正在加载您的位置...</string>
+    <!--城市列表-->
+    <string name="search_city">请输入要搜索的城市</string>
+    <string name="city_list">城市列表</string>
+    <!--城市管理-->
+    <string name="city_manager">城市管理</string>
+
 </resources>

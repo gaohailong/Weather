@@ -190,12 +190,15 @@ public class SplashActivity extends BaseActivity {
             switch (msg.what){
                 case ConstantUtils.JUHELATLON_GET_DATA:
                     doGetJuHeLocation();
+                    break;
                 case ConstantUtils.SPLASH_GET_DATA:
                     //保存当前城市数据
                     SharePreferencesUtil.saveObject(context,ConstantUtils.LOCATION_CITY_WEATHER,weather);
                     Intent intent = new Intent(SplashActivity.this,MainActivity.class);
                     startActivity(intent);
                     finish();
+                    break;
+                default:
                     break;
             }
         }

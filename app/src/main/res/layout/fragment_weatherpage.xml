@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
    >
 
     <TextView
@@ -16,10 +17,16 @@
         android:id="@+id/img_addCity"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="@string/image_notify"
         android:src="@mipmap/icon_add_64px" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/id_swipe_ly"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
     <ScrollView
         android:id="@+id/sv_content"
@@ -27,6 +34,9 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/img_addCity"
         android:layout_above="@+id/rl_bottomView"
+        android:scrollbars="none"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_alignParentStart="true">
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,9 +54,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/v_line"
-                    android:text="8"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/v_line"
                     android:textColor="@color/white"
                     android:textSize="50sp" />
 
@@ -56,8 +65,9 @@
                     android:layout_height="30dp"
                     android:layout_above="@+id/tv_weather"
                     android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/v_line"
+                    android:layout_marginStart="10dp"
+                    android:contentDescription="@string/image_notify"
+                    android:layout_toEndOf="@+id/v_line"
                     android:src="@mipmap/ic_launcher" />
 
                 <TextView
@@ -65,9 +75,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/v_line"
-                    android:text="晴"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/v_line"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
@@ -76,9 +85,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_weather"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/v_line"
-                    android:text="-6°~8°"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/v_line"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
@@ -109,8 +117,8 @@
                     android:id="@+id/tv_today"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_toLeftOf="@+id/tv_week"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_toStartOf="@+id/tv_week"
                     android:text="@string/today"
                     android:textColor="#99ffffff"
                     android:textSize="@dimen/mainFontSize" />
@@ -119,8 +127,7 @@
                     android:id="@+id/tv_week"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="星期五"
+                    android:layout_alignParentEnd="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/mainFontSize" />
 
@@ -136,7 +143,6 @@
                 android:id="@+id/rl_air"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_below="@+id/rl_center"
                 >
 
                 <ImageView
@@ -145,6 +151,7 @@
                     android:layout_height="80dp"
                     android:layout_margin="10dp"
                     android:scaleType="fitXY"
+                    android:contentDescription="@string/image_notify"
                     android:src="@mipmap/biz_plugin_weather_0_50" />
 
                 <TextView
@@ -153,7 +160,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/tv_airGrade"
                     android:layout_below="@+id/tv_airGrade"
-                    android:text="llslslslsls"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -162,7 +168,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="优"
                     android:textColor="@color/white"
                     android:textSize="@dimen/mainFontSize"
                     android:layout_alignParentTop="true"
@@ -195,7 +200,6 @@
                         android:layout_centerHorizontal="true"
                         android:layout_above="@+id/rl_one"
                         android:layout_marginBottom="10dp"
-                        android:text="星期一"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mainFontSize" />
 
@@ -210,16 +214,15 @@
                             android:id="@+id/img_oneWeather"
                             android:layout_width="45dp"
                             android:layout_height="45dp"
+                            android:contentDescription="@string/image_notify"
                             android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:src="@drawable/ww" />
+                            android:layout_alignParentTop="true"/>
 
                         <TextView
                             android:id="@+id/tv_oneTempMax"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/img_oneWeather"
-                            android:text="6°"
+                            android:layout_toEndOf="@+id/img_oneWeather"
                             android:textColor="@color/white"
                             android:textSize="@dimen/mainFontSize" />
 
@@ -228,8 +231,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/tv_oneTempMax"
-                            android:layout_toRightOf="@+id/img_oneWeather"
-                            android:text="6°"
+                            android:layout_toEndOf="@+id/img_oneWeather"
                             android:textColor="@color/white"
                             android:textSize="@dimen/mainFontSize" />
                     </RelativeLayout>
@@ -241,7 +243,6 @@
                         android:layout_below="@+id/rl_one"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:text="晴"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mainFontSize" />
 
@@ -265,7 +266,6 @@
                         android:layout_centerHorizontal="true"
                         android:layout_above="@+id/rl_two"
                         android:layout_marginBottom="10dp"
-                        android:text="星期一"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mainFontSize" />
 
@@ -282,14 +282,13 @@
                             android:layout_height="40dp"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentTop="true"
-                            android:src="@drawable/ww" />
+                            android:contentDescription="@string/image_notify"/>
 
                         <TextView
                             android:id="@+id/tv_twoTempMax"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/img_twoWeather"
-                            android:text="6°"
+                            android:layout_toEndOf="@+id/img_twoWeather"
                             android:textColor="@color/white"
                             android:textSize="@dimen/mainFontSize" />
 
@@ -298,8 +297,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/tv_twoTempMax"
-                            android:layout_toRightOf="@+id/img_twoWeather"
-                            android:text="6°"
+                            android:layout_toEndOf="@+id/img_twoWeather"
                             android:textColor="@color/white"
                             android:textSize="@dimen/mainFontSize" />
                     </RelativeLayout>
@@ -311,7 +309,6 @@
                         android:layout_below="@+id/rl_two"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:text="晴"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mainFontSize" />
 
@@ -335,7 +332,6 @@
                         android:layout_centerHorizontal="true"
                         android:layout_above="@+id/rl_three"
                         android:layout_marginBottom="10dp"
-                        android:text="星期一"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mainFontSize" />
 
@@ -350,16 +346,15 @@
                             android:id="@+id/img_threeWeather"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
+                            android:contentDescription="@string/image_notify"
                             android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:src="@drawable/ww" />
+                            android:layout_alignParentTop="true"/>
 
                         <TextView
                             android:id="@+id/tv_threeTempMax"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/img_threeWeather"
-                            android:text="6°"
+                            android:layout_toEndOf="@+id/img_threeWeather"
                             android:textColor="@color/white"
                             android:textSize="@dimen/mainFontSize" />
 
@@ -368,8 +363,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/tv_threeTempMax"
-                            android:layout_toRightOf="@+id/img_threeWeather"
-                            android:text="6°"
+                            android:layout_toEndOf="@+id/img_threeWeather"
                             android:textColor="@color/white"
                             android:textSize="@dimen/mainFontSize" />
                     </RelativeLayout>
@@ -381,7 +375,6 @@
                         android:layout_below="@+id/rl_three"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:text="晴"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mainFontSize" />
 
@@ -405,7 +398,6 @@
                         android:layout_centerHorizontal="true"
                         android:layout_above="@+id/rl_four"
                         android:layout_marginBottom="10dp"
-                        android:text="星期一"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mainFontSize" />
 
@@ -420,16 +412,15 @@
                             android:id="@+id/img_fourWeather"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
+                            android:contentDescription="@string/image_notify"
                             android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:src="@drawable/ww" />
+                            android:layout_alignParentTop="true"/>
 
                         <TextView
                             android:id="@+id/tv_fourTempMax"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/img_fourWeather"
-                            android:text="6°"
+                            android:layout_toEndOf="@+id/img_fourWeather"
                             android:textColor="@color/white"
                             android:textSize="@dimen/mainFontSize" />
 
@@ -438,8 +429,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/tv_fourTempMax"
-                            android:layout_toRightOf="@+id/img_fourWeather"
-                            android:text="6°"
+                            android:layout_toEndOf="@+id/img_fourWeather"
                             android:textColor="@color/white"
                             android:textSize="@dimen/mainFontSize" />
                     </RelativeLayout>
@@ -451,7 +441,6 @@
                         android:layout_below="@id/rl_four"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:text="晴"
                         android:textColor="@color/white"
                         android:textSize="@dimen/mainFontSize" />
 
@@ -471,8 +460,8 @@
                 android:textSize="@dimen/mainFontSize"
                 android:textColor="#99ffffff"
                 android:layout_marginTop="15dp"
-                android:layout_marginLeft="10dp"
-                android:text="详细信息"/>
+                android:layout_marginStart="10dp"
+                android:text="@string/detail_info"/>
 
             <View
                 android:layout_width="match_parent"
@@ -493,15 +482,16 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:contentDescription="@string/image_notify"
                     android:src="@drawable/ww"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:orientation="vertical"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:layout_toRightOf="@+id/img_detailWeather">
+                    android:layout_toEndOf="@+id/img_detailWeather">
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
@@ -510,17 +500,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="今日预报"
                             android:textColor="@color/white"
                             android:textSize="@dimen/mainFontSize"
+                            android:text="@string/today_prediction"
                             />
                         <TextView
                             android:id="@+id/tv_detailWeather"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:textColor="@color/white"
-                            android:text="今日预报"
                             android:textSize="@dimen/mainFontSize"
                             />
                     </RelativeLayout>
@@ -533,16 +522,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
-                            android:text="体感温度"
+                            android:text="@string/detail_temp"
                             android:textSize="@dimen/mainFontSize"
                             />
                         <TextView
                             android:id="@+id/tv_detailTemp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:textColor="@color/white"
-                            android:text="今日预报"
                             android:textSize="@dimen/mainFontSize"
                             />
                     </RelativeLayout>
@@ -555,16 +543,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
-                            android:text="空气湿度"
+                            android:text="@string/api_humidity"
                             android:textSize="@dimen/mainFontSize"
                             />
                         <TextView
                             android:id="@+id/tv_detailHumidity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:textColor="@color/white"
-                            android:text="今日预报"
                             android:textSize="@dimen/mainFontSize"
                             />
                     </RelativeLayout>
@@ -577,21 +564,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
-                            android:text="风向风力"
+                            android:text="@string/wind"
                             android:textSize="@dimen/mainFontSize"
                             />
                         <TextView
                             android:id="@+id/tv_detailWind"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:textColor="@color/white"
-                            android:text="风向风力"
                             android:textSize="@dimen/mainFontSize"
                             />
                     </RelativeLayout>
                 </LinearLayout>
             </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -831,10 +818,24 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:background="#99ffffff" />
+            <ListView
+                android:id="@+id/lv_life"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin" >
+            </ListView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="#99ffffff" />
         </LinearLayout>
 
     </ScrollView>
-
+    </android.support.v4.widget.SwipeRefreshLayout>
     <RelativeLayout
         android:id="@+id/rl_bottomView"
         android:layout_width="wrap_content"
@@ -846,8 +847,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="天气预报"
+            android:layout_marginStart="10dp"
+            android:text="@string/weather_prediction"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
@@ -855,11 +856,10 @@
             android:id="@+id/tv_upDataTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="发布"
+            android:layout_alignParentEnd="true"
             android:textColor="@color/white"
             android:textSize="14sp"
-            android:layout_marginRight="14sp"/>
+            android:layout_marginEnd="14sp"/>
     </RelativeLayout>
 
 

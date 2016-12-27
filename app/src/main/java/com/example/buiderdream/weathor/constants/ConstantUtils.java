@@ -32,5 +32,7 @@ public class ConstantUtils {
     public static final int JUHELATLON_GET_DATA = 0x00001001;
     // 闪屏页获取数据
     public static final int SPLASH_GET_DATA = 0x00001002;
+    // 刷新数据
+    public static final int REFRESH_DATA = 0x00001002;
 
 }
