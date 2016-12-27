@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
    >
 
     <TextView
@@ -10,7 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="闻喜"
         android:textColor="@color/white"
         android:textSize="30sp" />
     <ImageView
@@ -21,33 +21,6 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:src="@mipmap/icon_add_64px" />
-
-    <RelativeLayout
-        android:id="@+id/rl_bottomView"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="天气预报"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tv_upDataTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="发布"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:layout_marginRight="14sp"/>
-    </RelativeLayout>
 
     <ScrollView
         android:id="@+id/sv_content"
@@ -65,8 +38,7 @@
                 android:id="@+id/rl_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/rl_center"
-               >
+                >
 
                 <TextView
                     android:id="@+id/tv_actualTemperature"
@@ -123,7 +95,6 @@
                 android:id="@+id/rl_center"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_centerVertical="true"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin">
 
@@ -166,14 +137,14 @@
                 android:id="@+id/rl_air"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/rl_center"
-                android:padding="10dp">
+                >
 
                 <ImageView
                     android:id="@+id/img_notification"
                     android:layout_width="60dp"
                     android:layout_height="80dp"
+                    android:layout_margin="10dp"
                     android:scaleType="fitXY"
                     android:src="@mipmap/biz_plugin_weather_0_50" />
 
@@ -202,14 +173,14 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_below="@+id/rl_air"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:background="#99ffffff" />
             <LinearLayout
                 android:id="@+id/gv_fourDay"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:layout_below="@+id/rl_air"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
@@ -487,6 +458,60 @@
 
                 </RelativeLayout>
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="#99ffffff" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/mainFontSize"
+                android:textColor="#99ffffff"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:text="详细信息"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="#99ffffff" />
+
         </LinearLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rl_bottomView"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="天气预报"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_upDataTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="发布"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_marginRight="14sp"/>
+    </RelativeLayout>
+
+
 </RelativeLayout>
