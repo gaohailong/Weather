@@ -84,7 +84,6 @@ public class AllCityListActivity extends AppCompatActivity {
 
         if (!dbFile.exists()) {
             doRequestData();
-
         }
         cityInfos = cityDB.findCitys();
         for (int i = 0; i < cityInfos.size(); i++) {

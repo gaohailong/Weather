@@ -19,7 +19,7 @@ public class ConstantUtils {
     //聚合经纬度地址
     public static final String JUHELATLON_URL = "http://apis.juhe.cn/geo/";
     //聚合经纬度key
-    public static final String JUHELATLON_KEY = "6450b3750acde5defe3499f54d3d706a";
+    public static final String JUHELATLON_KEY = "f48c3e892f92a885b0e3c360132c3432";
 
     //保存用户关注的城市
     public static final String USER_COLLECT_CITY = "userColloctCitySP";
@@ -27,7 +27,10 @@ public class ConstantUtils {
     public static final String LOCATION_CITY_WEATHER = "locationCityWeatherSP";
     //获取和风天气的数据
     public static final int WEATHERPAGEFRRAGMENT_GET_DATA = 0x00001000;
+
     //聚合定位得到的数据
     public static final int JUHELATLON_GET_DATA = 0x00001001;
+    // 闪屏页获取数据
+    public static final int SPLASH_GET_DATA = 0x00001002;
 
 }

@@ -2,15 +2,10 @@ package com.example.buiderdream.weathor.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.ActionMenuView;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ant.liao.GifView;
 import com.example.buiderdream.weathor.R;
 import com.example.buiderdream.weathor.activitys.CityListMgrActivity;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
@@ -113,6 +109,8 @@ public class WeatherPageFragment extends Fragment {
     private RelativeLayout rl_bottomView;   //底部标题
     private LinearLayout gv_fourDay;         //未来四天数据
 
+    private GifView gif_background;   //gif背景图
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -131,6 +129,9 @@ public class WeatherPageFragment extends Fragment {
     }
 
     private void initView() {
+
+        gif_background = (GifView) getActivity().findViewById(R.id.gif_background);
+
         img_addCity = (ImageView) weatherPageFragment.findViewById(R.id.img_addCity);
         tv_cityName = (TextView) weatherPageFragment.findViewById(R.id.tv_cityName);
         tv_actualTemperature = (TextView) weatherPageFragment.findViewById(R.id.tv_actualTemperature);
@@ -244,12 +245,23 @@ public class WeatherPageFragment extends Fragment {
      * 更新界面
      */
     private void upDataView() {
+        // 设置Gif图片源
+//   gif_background.setGifImage(UpdataWeatherUtils.setGifImg(weather.getDaily_forecast().get(0).getCond().getCode_d()));
+        // 设置显示的大小，拉伸或者压缩
+//        WindowManager wm = (WindowManager) context
+//                .getSystemService(Context.WINDOW_SERVICE);
+//        int width = wm.getDefaultDisplay().getWidth();
+//        int height = wm.getDefaultDisplay().getHeight();
+//        gif_background.setShowDimension(width, height);
+//        // 设置加载方式：先加载后显示、边加载边显示、只显示第一帧再显示
+//        gif_background.setGifImageType(GifView.GifImageType.COVER);
+
         img_weather.setImageResource(UpdataWeatherUtils.setWeatherImg(weather.getDaily_forecast().get(0).getCond().getCode_d()));
         tv_cityName.setText(weather.getBasic().getCity());
         tv_actualTemperature.setText(weather.getNow().getTmp() + "°");
         tv_weather.setText(weather.getNow().getCond().getTxt());
         tv_temperature.setText(weather.getDaily_forecast().get(0).getTmp().getMin() + "~" + weather.getDaily_forecast().get(0).getTmp().getMax());
-        if (weather.getAqi()==null){
+        if (weather.getAqi()!=null){
             img_notification.setImageDrawable(UpdataWeatherUtils.getAirHintImg(context,weather.getAqi().getCity().getAqi()));
         }
         tv_airGrade.setText(weather.getSuggestion().getAir().getBrf());

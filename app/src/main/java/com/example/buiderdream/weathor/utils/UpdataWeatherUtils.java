@@ -12,6 +12,30 @@ import com.example.buiderdream.weathor.R;
  */
 
 public class UpdataWeatherUtils {
+
+
+    public static int setGifImg(String id){
+        int src = 0;
+        int windid = Integer.valueOf(id);
+        if (windid<200){
+            src = R.drawable.gif_fine2;
+        }else if(200<=windid&&windid<300){
+            src = R.drawable.gif_fine2;
+        }else if(300<=windid&&windid<400){
+            src = R.drawable.gif_thunder;
+            if (windid>304){
+                src = R.drawable.gif_lightrain;
+            }
+        }else if(400<=windid&&windid<500){
+            src = R.drawable.gif_snow;
+        }else {
+            src = R.drawable.gif_default;
+        }
+
+
+        return src;
+    }
+
     /**
      * 设置天气图片
      *
@@ -88,7 +112,6 @@ public class UpdataWeatherUtils {
             case 303:
                 src = R.drawable.w303;
                 break;
-
             case 304:
                 src = R.drawable.w304;
                 break;
@@ -175,6 +198,7 @@ public class UpdataWeatherUtils {
                 src = R.drawable.w999;
                 break;
             default:
+                src = R.drawable.ww;
                 break;
         }
         return src;
