@@ -2,10 +2,7 @@ package com.example.buiderdream.weathor.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-<<<<<<< HEAD
-=======
 import android.graphics.drawable.Drawable;
->>>>>>> 7ace8c0a451acebd2aa934e954cd12c1cb0fc0d8
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.buiderdream.weathor.R;
 import com.example.buiderdream.weathor.activitys.AllCityListActivity;
 import com.example.buiderdream.weathor.activitys.CityListMgrActivity;
@@ -29,7 +25,6 @@ import com.example.buiderdream.weathor.utils.DateUtils;
 import com.example.buiderdream.weathor.utils.SharePreferencesUtil;
 import com.google.gson.Gson;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
