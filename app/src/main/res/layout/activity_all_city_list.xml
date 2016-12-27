@@ -41,7 +41,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10" />
-
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:focusableInTouchMode="true"
+            />
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="40dp"
@@ -51,9 +55,22 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/city_list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/city_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/pro_all_city"
+            android:visibility="gone"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
 </LinearLayout>
