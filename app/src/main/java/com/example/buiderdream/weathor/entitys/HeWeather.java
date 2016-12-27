@@ -1,12 +1,13 @@
 package com.example.buiderdream.weathor.entitys;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/12/24.
  */
 
-public class HeWeather  {
+public class HeWeather implements Serializable{
 
     /**
      * city : {"aqi":"196","co":"3","no2":"110","o3":"4","pm10":"117","pm25":"196","qlty":"中度污染","so2":"25"}
@@ -140,7 +141,7 @@ public class HeWeather  {
         this.hourly_forecast = hourly_forecast;
     }
 
-    public static class AqiBean {
+    public static class AqiBean implements Serializable{
         /**
          * aqi : 196
          * co : 3
@@ -162,7 +163,7 @@ public class HeWeather  {
             this.city = city;
         }
 
-        public static class CityBean {
+        public static class CityBean implements Serializable{
             private String aqi;
             private String co;
             private String no2;
@@ -238,7 +239,7 @@ public class HeWeather  {
         }
     }
 
-    public static class BasicBean {
+    public static class BasicBean implements Serializable{
         private String city;
         private String cnty;
         private String id;
@@ -299,7 +300,7 @@ public class HeWeather  {
             this.update = update;
         }
 
-        public static class UpdateBean {
+        public static class UpdateBean implements Serializable{
             private String loc;
             private String utc;
 
@@ -321,7 +322,7 @@ public class HeWeather  {
         }
     }
 
-    public static class NowBean {
+    public static class NowBean implements Serializable{
         /**
          * code : 101
          * txt : 多云
@@ -407,7 +408,7 @@ public class HeWeather  {
             this.wind = wind;
         }
 
-        public static class CondBean {
+        public static class CondBean implements Serializable{
             private String code;
             private String txt;
 
@@ -428,7 +429,7 @@ public class HeWeather  {
             }
         }
 
-        public static class WindBean {
+        public static class WindBean implements Serializable{
             private String deg;
             private String dir;
             private String sc;
@@ -468,7 +469,7 @@ public class HeWeather  {
         }
     }
 
-    public static class SuggestionBean {
+    public static class SuggestionBean implements Serializable{
         /**
          * brf : 中
          * txt : 气象条件对空气污染物稀释、扩散和清除无明显影响，易感人群应适当减少室外活动时间。
@@ -582,7 +583,7 @@ public class HeWeather  {
             this.uv = uv;
         }
 
-        public static class AirBean {
+        public static class AirBean implements Serializable{
             private String brf;
             private String txt;
 
@@ -603,7 +604,7 @@ public class HeWeather  {
             }
         }
 
-        public static class ComfBean {
+        public static class ComfBean implements Serializable{
             private String brf;
             private String txt;
 
@@ -624,7 +625,7 @@ public class HeWeather  {
             }
         }
 
-        public static class CwBean {
+        public static class CwBean implements Serializable{
             private String brf;
             private String txt;
 
@@ -645,7 +646,7 @@ public class HeWeather  {
             }
         }
 
-        public static class DrsgBean {
+        public static class DrsgBean implements Serializable{
             private String brf;
             private String txt;
 
@@ -666,7 +667,7 @@ public class HeWeather  {
             }
         }
 
-        public static class FluBean {
+        public static class FluBean implements Serializable {
             private String brf;
             private String txt;
 
@@ -687,7 +688,7 @@ public class HeWeather  {
             }
         }
 
-        public static class SportBean {
+        public static class SportBean implements Serializable {
             private String brf;
             private String txt;
 
@@ -708,7 +709,7 @@ public class HeWeather  {
             }
         }
 
-        public static class TravBean {
+        public static class TravBean implements Serializable{
             private String brf;
             private String txt;
 
@@ -729,7 +730,7 @@ public class HeWeather  {
             }
         }
 
-        public static class UvBean {
+        public static class UvBean implements Serializable{
             private String brf;
             private String txt;
 
@@ -751,7 +752,7 @@ public class HeWeather  {
         }
     }
 
-    public static class DailyForecastBean {
+    public static class DailyForecastBean implements Serializable {
         /**
          * sr : 07:33
          * ss : 16:54
@@ -876,7 +877,7 @@ public class HeWeather  {
             this.wind = wind;
         }
 
-        public static class AstroBean {
+        public static class AstroBean implements Serializable{
             private String sr;
             private String ss;
 
@@ -897,7 +898,7 @@ public class HeWeather  {
             }
         }
 
-        public static class CondBean {
+        public static class CondBean implements Serializable{
             private String code_d;
             private String code_n;
             private String txt_d;
@@ -936,7 +937,7 @@ public class HeWeather  {
             }
         }
 
-        public static class TmpBean {
+        public static class TmpBean implements Serializable{
             private String max;
             private String min;
 
@@ -957,7 +958,7 @@ public class HeWeather  {
             }
         }
 
-        public static class WindBean {
+        public static class WindBean implements Serializable{
             private String deg;
             private String dir;
             private String sc;
@@ -997,7 +998,7 @@ public class HeWeather  {
         }
     }
 
-    public static class HourlyForecastBean {
+    public static class HourlyForecastBean implements Serializable{
         private String date;
         private String hum;
         private String pop;
@@ -1060,7 +1061,7 @@ public class HeWeather  {
             this.wind = wind;
         }
 
-        public static class WindBean {
+        public static class WindBean implements Serializable{
             private String deg;
             private String dir;
             private String sc;

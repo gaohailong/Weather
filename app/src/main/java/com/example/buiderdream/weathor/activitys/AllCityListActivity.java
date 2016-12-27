@@ -88,6 +88,7 @@ public class AllCityListActivity extends BaseActivity {
         if (!dbFile.exists()||cityDB.findCitys().size()==0) {
             doRequestData();
 
+
         }else{
             pro_all_city.setVisibility(View.GONE);
             notifyListAdapter();

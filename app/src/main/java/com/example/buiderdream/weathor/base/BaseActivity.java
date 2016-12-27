@@ -1,7 +1,6 @@
 package com.example.buiderdream.weathor.base;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 

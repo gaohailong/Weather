@@ -16,15 +16,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activitys.MainActivity">
+
+        </activity>
+        <activity android:name=".base.BaseActivity" />
+        <activity android:name=".activitys.AllCityListActivity" />
+        <activity android:name=".activitys.CityListMgrActivity" />
+        <activity android:name=".activitys.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".base.BaseActivity" />
-        <activity android:name=".activitys.AllCityListActivity" />
-        <activity android:name=".activitys.CityListMgrActivity" />
         <receiver android:name=".appwidget.WeatherWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
