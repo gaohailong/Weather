@@ -9,6 +9,7 @@ import android.view.WindowManager;
 
 import com.ant.liao.GifView;
 import com.example.buiderdream.weathor.R;
+import com.example.buiderdream.weathor.base.BaseActivity;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
 import com.example.buiderdream.weathor.entitys.City;
 import com.example.buiderdream.weathor.fragment.WeatherPageFragment;
