@@ -3,17 +3,23 @@ package com.example.buiderdream.weathor.fragment;
 import android.content.Context;
 import android.content.Intent;
 
-import android.graphics.drawable.Drawable;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.ActionMenuView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +31,7 @@ import com.example.buiderdream.weathor.entitys.City;
 import com.example.buiderdream.weathor.entitys.HeWeather;
 import com.example.buiderdream.weathor.https.OkHttpClientManager;
 import com.example.buiderdream.weathor.utils.DateUtils;
+import com.example.buiderdream.weathor.utils.DeviceUtil;
 import com.example.buiderdream.weathor.utils.SharePreferencesUtil;
 import com.google.gson.Gson;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -91,6 +98,13 @@ public class WeatherPageFragment extends Fragment {
     private TextView tv_fourWeather;   //大大后天的天气
     private ImageView img_fourWeather;  //大大后天的天气图片
 
+    private RelativeLayout rl_content;
+    private RelativeLayout rl_air;
+    private RelativeLayout rl_center;
+    private RelativeLayout rl_bottomView;
+    private LinearLayout gv_fourDay;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -153,8 +167,27 @@ public class WeatherPageFragment extends Fragment {
         tv_fourTempMin = (TextView) weatherPageFragment.findViewById(R.id.tv_fourTempMin);
         tv_fourWeather = (TextView) weatherPageFragment.findViewById(R.id.tv_fourWeather);
         img_fourWeather = (ImageView) weatherPageFragment.findViewById(R.id.img_fourWeather);
+        rl_content = (RelativeLayout) this.weatherPageFragment.findViewById(R.id.rl_content);
+        rl_air = (RelativeLayout) this.weatherPageFragment.findViewById(R.id.rl_air);
+        rl_center = (RelativeLayout) this.weatherPageFragment.findViewById(R.id.rl_center);
+        rl_bottomView = (RelativeLayout) this.weatherPageFragment.findViewById(R.id.rl_bottomView);
+        gv_fourDay = (LinearLayout) this.weatherPageFragment.findViewById(R.id.gv_fourDay);
+
+
+        ViewGroup.LayoutParams params = rl_content.getLayoutParams();
+        WindowManager wm = (WindowManager) getContext()
+                .getSystemService(Context.WINDOW_SERVICE);
+
+        int width = wm.getDefaultDisplay().getWidth();
+        int height = wm.getDefaultDisplay().getHeight();
+        params.width = width;
+        //屏幕适配
+        params.height = height-img_addCity.getLayoutParams().height*2-rl_air.getLayoutParams().height
+                -rl_bottomView.getLayoutParams().height*2-rl_center.getLayoutParams().height-gv_fourDay.getLayoutParams().height;
+        rl_content.setLayoutParams(params);
 
     }
+
 
     private void doRequestData(String cityName) {
         OkHttpClientManager manager = OkHttpClientManager.getInstance();
