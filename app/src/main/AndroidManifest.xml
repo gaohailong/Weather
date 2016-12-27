@@ -4,9 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:name=".app.BaseAppliction"
         android:allowBackup="true"
@@ -23,7 +24,21 @@
         </activity>
         <activity android:name=".base.BaseActivity" />
         <activity android:name=".activitys.AllCityListActivity" />
-        <activity android:name=".activitys.CityListMgrActivity"></activity>
+        <activity android:name=".activitys.CityListMgrActivity" />
+        <receiver android:name=".appwidget.WeatherWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/cofig_widget" />
+        </receiver>
+
+        <service
+            android:name=".service.WeatherService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
