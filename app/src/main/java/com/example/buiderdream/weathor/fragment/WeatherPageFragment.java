@@ -2,10 +2,9 @@ package com.example.buiderdream.weathor.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-<<<<<<< HEAD
-=======
+
 import android.graphics.drawable.Drawable;
->>>>>>> 7ace8c0a451acebd2aa934e954cd12c1cb0fc0d8
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
