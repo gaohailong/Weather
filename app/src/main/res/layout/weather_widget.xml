@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:weightSum="1">
@@ -21,16 +20,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:orientation="vertical">
                 <TextView
-                    android:text="10:35"
+                    android:text="@string/widget_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/widget_time"
                     android:textSize="28sp"
                     android:textColor="@color/black"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginStart="10dp"/>
 
             </LinearLayout>
 
@@ -38,10 +36,10 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp">
+                android:layout_marginStart="10dp">
 
                 <TextView
-                    android:text="1°C"
+                    android:text="@string/widget_temp"
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -49,7 +47,7 @@
                     android:textSize="32sp"
                     android:textColor="@color/black"
                     android:gravity="center"
-                    android:layout_alignParentStart="true" />
+                     />
 
 
                 <LinearLayout
@@ -57,22 +55,21 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:layout_marginLeft="20dp">
+                    android:layout_marginStart="20dp">
                     <TextView
                         android:id="@+id/widget_cond"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="晴"
+                        android:text="@string/widget_cond"
                         android:textColor="@color/black"
-                        android:layout_gravity="left"/>
+                        android:layout_gravity="start"/>
                     <TextView
                         android:id="@+id/widget_aqi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="空气质量:良"
+                        android:text="@string/widget_aqi"
                         android:textColor="@color/black"
-                        android:layout_marginTop="5dp"
-                        />
+                        android:layout_marginTop="5dp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -80,6 +77,7 @@
         </LinearLayout>
 
         <ImageView
+            android:contentDescription="@string/image_notify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -97,16 +95,15 @@
             >
 
             <TextView
-                android:text="微风"
+                android:text="@string/widget_wind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/widget_wind"
-                android:layout_weight="1"
                 android:textColor="@color/black"
                 />
 
             <TextView
-                android:text="昌平"
+                android:text="@string/widget_city"
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -118,17 +115,18 @@
 
     </RelativeLayout>
     <TextView
-        android:text="穿衣建议"
+        android:text="@string/widget_suggest"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="30dp"
         android:id="@+id/widget_suggestion"
         android:gravity="center"
         android:textColor="@color/black"
-        android:background="@color/paleturquoise"
+        android:background="#ccafeeee"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
         android:focusable="true"
-        android:singleLine="true"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
         android:duplicateParentState="false"
         android:focusableInTouchMode="true">
         <requestFocus

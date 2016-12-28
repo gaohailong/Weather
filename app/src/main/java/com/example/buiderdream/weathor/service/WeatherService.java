@@ -43,14 +43,14 @@ public class WeatherService extends Service {
             public void run() {
                 updateTime();
             }
-        }, 0, 1000);
+        }, 0, 60000);
         timer2 = new Timer();
         timer2.schedule(new TimerTask() {
             @Override
             public void run() {
                 updateView();
             }
-        }, 0, 1000);
+        }, 0, 6000);
     }
 
     private void updateTime() {
@@ -111,7 +111,7 @@ public class WeatherService extends Service {
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroy(  ) {
         super.onDestroy();
         timer = null;
         timer2 = null;

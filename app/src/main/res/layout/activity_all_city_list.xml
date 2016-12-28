@@ -42,6 +42,7 @@
             android:layout_weight="1"
             android:hint="@string/search_city"
             android:labelFor="@+id/searchEdit"
+            android:maxLines="1"
             android:ems="10" />
         <TextView
             android:layout_width="0dp"

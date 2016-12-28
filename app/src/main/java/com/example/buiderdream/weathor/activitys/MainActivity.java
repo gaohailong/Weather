@@ -53,8 +53,8 @@ public class MainActivity extends FragmentActivity {
 
         manager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
         Intent intent = new Intent(MainActivity.this, NotifyService.class);
-        pendingIntent = PendingIntent.getService(getApplicationContext(),1,intent,1);
-        manager.setRepeating(AlarmManager.RTC_WAKEUP,0,30000,pendingIntent);
+        pendingIntent = PendingIntent.getService(getApplicationContext(),1,intent,0);
+        manager.setRepeating(AlarmManager.RTC_WAKEUP,0,1000*60,pendingIntent);
 
         context = this;
         initView();
