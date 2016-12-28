@@ -133,7 +133,7 @@ public class NotifyService extends Service{
             remoteViews.setTextViewText(R.id.noti_textView2, curCity);
             remoteViews.setTextViewText(R.id.noti_textView3, cutTemp+"摄氏度");
         }
-        remoteViews.setImageViewResource(R.id.noti_imageView,R.drawable.w100);
+        remoteViews.setImageViewResource(R.id.noti_imageView,UpdataWeatherUtils.setWeatherImg(weather.getNow().getCond().getCode()));
         notification.contentView = remoteViews;
 
         notification.when =System.currentTimeMillis();

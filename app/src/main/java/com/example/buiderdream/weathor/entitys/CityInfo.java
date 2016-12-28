@@ -1,6 +1,8 @@
 package com.example.buiderdream.weathor.entitys;
 
-public class CityInfo {
+import java.io.Serializable;
+
+public class CityInfo implements Serializable{
 	
 	private int id;
 	private String province;

@@ -43,14 +43,11 @@ import okhttp3.Request;
  * @author 文捷
  */
 public class AllCityListActivity extends BaseActivity {
-
-
-
     private EditText searchEdit;
     List<City> collecCity = new ArrayList<City>();
     private ProgressBar pro_all_city;
     CityDBHelper cityDBHelper = new CityDBHelper(AllCityListActivity.this);
-    List<CityInfo> cityInfos = new ArrayList<CityInfo>();
+    List<CityInfo>  cityInfos = new ArrayList<CityInfo>();
     private ListView listView;
     private List<String> cityNameList = new ArrayList<String>();
     private CommonAdapter<String> cityNameAdapter;
@@ -63,25 +60,26 @@ public class AllCityListActivity extends BaseActivity {
             super.handleMessage(msg);
             if (msg.what ==1){
                 if (cityDBHelper.findCitys().size()==0){
-                    WriteToDB();
+                    WriteToDB((ArrayList<CityInfo>) msg.obj);
                 }
-                notifyListAdapter();
+
             }
         }
     };
 
-    private void WriteToDB() {
+    private void WriteToDB(final ArrayList<CityInfo> cityInfo) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < cityInfos.size(); i++) {
-                    cityDBHelper.AddCitys(cityInfos.get(i));
+                for (int i = 0; i < cityInfo.size(); i++) {
+                    cityDBHelper.AddCitys(cityInfo.get(i));
                 }
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        pro_all_city.setVisibility(View.GONE);
+
                         notifyListAdapter();
+                        pro_all_city.setVisibility(View.GONE);
                     }
                 });
             }
@@ -105,7 +103,6 @@ public class AllCityListActivity extends BaseActivity {
         if (cityDBHelper.findCitys().size()==0) {
             doRequestData();
         }else{
-            pro_all_city.setVisibility(View.GONE);
 
             notifyListAdapter();
         }
@@ -125,7 +122,7 @@ public class AllCityListActivity extends BaseActivity {
         };
         listView.setAdapter(cityNameAdapter);
         cityNameAdapter.notifyDataSetChanged();
-        pro_all_city.setVisibility(View.GONE);
+
 
     }
 

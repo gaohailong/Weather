@@ -6,6 +6,7 @@
     <string name="detail_info">详细信息</string>
     <string name="weather_prediction">详细信息</string>
     <string name="today_prediction">今日预报</string>
+    <string name="d_prediction">天气预报</string>
     <string name="detail_temp">体感温度</string>
     <string name="api_humidity">空气湿度</string>
     <string name="wind">风力风向</string>

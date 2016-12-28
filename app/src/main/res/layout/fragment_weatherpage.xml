@@ -853,7 +853,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="@string/weather_prediction"
+            android:text="@string/d_prediction"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
