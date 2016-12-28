@@ -84,11 +84,8 @@ public class SplashActivity extends BaseActivity {
         Location location = manager.getLastKnownLocation(provider);
         if (location != null)
         {
-            //纬度
-            Toast.makeText(SplashActivity.this,location.getLatitude()+"",Toast.LENGTH_SHORT).show();
+
             lat = location.getLatitude()+"";
-            //经度
-            Toast.makeText(SplashActivity.this,location.getLongitude()+"",Toast.LENGTH_SHORT).show();
             lon = location.getLongitude()+"";
         }
         manager.requestLocationUpdates(provider,5000,1,locationListener);
@@ -129,7 +126,7 @@ public class SplashActivity extends BaseActivity {
         manager.getAsync(url,new OkHttpClientManager.DataCallBack() {
             @Override
             public void requestFailure(Request request, IOException e) {
-                Toast.makeText(context,"失败了",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"数据加载失败！",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -176,6 +173,7 @@ public class SplashActivity extends BaseActivity {
         manager.getAsync(url, new OkHttpClientManager.DataCallBack() {
             @Override
             public void requestFailure(Request request, IOException e) {
+                Toast.makeText(context,"数据加载失败！",Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -12,6 +12,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.example.buiderdream.weathor.R;
 import com.example.buiderdream.weathor.activitys.MainActivity;
@@ -84,7 +85,6 @@ public class NotifyService extends Service{
         manager.getAsync(url, new OkHttpClientManager.DataCallBack() {
             @Override
             public void requestFailure(Request request, IOException e) {
-
             }
 
             @Override

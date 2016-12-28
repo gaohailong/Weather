@@ -51,6 +51,7 @@ public class AllCityListActivity extends BaseActivity {
     private ListView listView;
     private List<String> cityNameList = new ArrayList<String>();
     private CommonAdapter<String> cityNameAdapter;
+    private Context context;
     /**
      * 异步任务结束后通知进行数据库添加操作，只在第一次执行添加
      */
@@ -91,6 +92,7 @@ public class AllCityListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_city_list);
+        context = this;
         initView();
         initListView();
     }
@@ -140,6 +142,7 @@ public class AllCityListActivity extends BaseActivity {
         manager.getAsync(url, new OkHttpClientManager.DataCallBack() {
             @Override
             public void requestFailure(Request request, IOException e) {
+                Toast.makeText(context,"数据加载失败！",Toast.LENGTH_SHORT).show();
             }
 
             @Override
