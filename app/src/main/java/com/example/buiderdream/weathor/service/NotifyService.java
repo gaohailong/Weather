@@ -103,7 +103,7 @@ public class NotifyService extends Service{
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
-                case ConstantUtils.SPLASH_GET_DATA
+                case ConstantUtils.SPLASH_GET_DATA:
                     SharePreferencesUtil.saveObject(context, ConstantUtils.LOCATION_CITY_WEATHER, weather);
                     setNotification();
                     break;
