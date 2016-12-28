@@ -4,25 +4,42 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.widget.RemoteViews;
 
 import com.example.buiderdream.weathor.R;
-import com.example.buiderdream.weathor.activitys.AllCityListActivity;
-import com.example.buiderdream.weathor.activitys.CityListMgrActivity;
 import com.example.buiderdream.weathor.activitys.MainActivity;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
 import com.example.buiderdream.weathor.entitys.HeWeather;
+import com.example.buiderdream.weathor.https.OkHttpClientManager;
 import com.example.buiderdream.weathor.utils.SharePreferencesUtil;
 import com.example.buiderdream.weathor.utils.UpdataWeatherUtils;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Request;
 
 /**
  * Created by Admin on 2016/12/28.
  */
 
+
 public class NotifyService extends Service{
+
+    private  NotiHandler handler;
+    private HeWeather weather;
+    private Context context = this;
     Notification notification;
     RemoteViews remoteViews;
     NotificationManager nm;
@@ -44,9 +61,65 @@ public class NotifyService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        HeWeather weathers = (HeWeather) SharePreferencesUtil.readObject(this, ConstantUtils.LOCATION_CITY_WEATHER);
+        String curCity = weathers.getBasic().getCity();
+        doRequestData(curCity);
+
+//        setNotification();
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+
+    private void doRequestData(String cityName) {
+        OkHttpClientManager manager = OkHttpClientManager.getInstance();
+        Map<String, String> map = new HashMap<>();
+        map.put("city", cityName);
+        map.put("key", ConstantUtils.HEFENGWEATHER_KEY);
+        String url = OkHttpClientManager.attachHttpGetParams(ConstantUtils.HEFENGWEATHER_URL, map);
+        manager.getAsync(url, new OkHttpClientManager.DataCallBack() {
+            @Override
+            public void requestFailure(Request request, IOException e) {
+            }
+
+            @Override
+            public void requestSuccess(String result) throws Exception {
+                // 将{}中视为是json对象
+                JSONObject jsonObject = new JSONObject(result);
+                // 获取键"weatherinfo"中对应的值
+                JSONArray jsonArray1 = jsonObject
+                        .getJSONArray("HeWeather data service 3.0");
+                JSONObject jsonObject2 = jsonArray1.getJSONObject(0);
+                // 使用jar包解析数据
+                Gson gson = new Gson();
+                weather = gson.fromJson(
+                        jsonObject2.toString(), HeWeather.class);
+                handler.sendEmptyMessage(ConstantUtils.SPLASH_GET_DATA);
+            }
+        });
+    }
+
+    class  NotiHandler extends Handler{
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case ConstantUtils.SPLASH_GET_DATA
+                    SharePreferencesUtil.saveObject(context, ConstantUtils.LOCATION_CITY_WEATHER, weather);
+                    setNotification();
+                    break;
+            }
+
+        }
+    }
+
+
+    private void setNotification() {
         HeWeather weather = (HeWeather) SharePreferencesUtil.readObject(this, ConstantUtils.LOCATION_CITY_WEATHER);
-//      当前城市
+        //  当前城市
         notification = new Notification();
+        notification.icon = R.drawable.btn_homeasup_default;
+        notification.tickerText = "新通知";
+        notification.defaults = Notification.DEFAULT_ALL;
         remoteViews = new RemoteViews(this.getPackageName(), R.layout.item_notify);
         if (weather!= null) {
             String curCity = weather.getBasic().getCity();
@@ -54,13 +127,11 @@ public class NotifyService extends Service{
             String cutTemp = weather.getNow().getTmp();
             UpdataWeatherUtils.setWeatherImg(weather.getNow().getCond().getCode());
             remoteViews.setTextViewText(R.id.noti_textView2, curCity);
-            remoteViews.setTextViewText(R.id.noti_textView3, cutTemp);
+            remoteViews.setTextViewText(R.id.noti_textView3, cutTemp+"摄氏度");
         }
         remoteViews.setImageViewResource(R.id.noti_imageView,R.drawable.w100);
         notification.contentView = remoteViews;
-        notification.icon = R.drawable.btn_homeasup_default;
-        notification.tickerText = "新通知";
-        notification.defaults = Notification.DEFAULT_ALL;
+
         notification.when =System.currentTimeMillis();
 
 
@@ -73,11 +144,8 @@ public class NotifyService extends Service{
 
         nm = (NotificationManager) getSystemService(Service.NOTIFICATION_SERVICE);
         nm.notify(1,notification);
-
-        return super.onStartCommand(intent, flags, startId);
-
-
     }
+
 
     @Nullable
     @Override
