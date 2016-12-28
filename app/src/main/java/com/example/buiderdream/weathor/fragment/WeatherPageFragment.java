@@ -2,6 +2,8 @@ package com.example.buiderdream.weathor.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -121,8 +123,7 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
     private List<LifeInfo> lifeInfoList;  //生活数据
     private CommonAdapter<LifeInfo> adapter;
 
-    private GifView gif_background;   //gif背景图
-
+    private MediaPlayer player;  //播放音乐
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -149,8 +150,6 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
                         getResources().getColor(android.R.color.holo_green_light),
                         getResources().getColor(android.R.color.holo_orange_light),
                         getResources().getColor(android.R.color.holo_red_light));
-        gif_background = (GifView) getActivity().findViewById(R.id.gif_background);
-
         img_addCity = (ImageView) weatherPageFragment.findViewById(R.id.img_addCity);
         tv_cityName = (TextView) weatherPageFragment.findViewById(R.id.tv_cityName);
         tv_actualTemperature = (TextView) weatherPageFragment.findViewById(R.id.tv_actualTemperature);
@@ -265,18 +264,8 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
      * 更新界面
      */
     private void upDataView() {
-//        // 设置Gif图片源
-//        gif_background.setGifImage(UpdataWeatherUtils.setGifImg(weather.getDaily_forecast().get(0).getCond().getCode_d()));
-//        // 设置显示的大小，拉伸或者压缩
-//        WindowManager wm = (WindowManager) context
-//                .getSystemService(Context.WINDOW_SERVICE);
-//        int width = wm.getDefaultDisplay().getWidth();
-//        int height = wm.getDefaultDisplay().getHeight();
-//        gif_background.setShowDimension(width, height);
-//        // 设置加载方式：先加载后显示、边加载边显示、只显示第一帧再显示
-//        gif_background.setGifImageType(GifView.GifImageType.COVER);
-
-        img_weather.setImageResource(UpdataWeatherUtils.setWeatherImg(weather.getDaily_forecast().get(0).getCond().getCode_d()));
+     
+        img_weather.setImageResource(UpdataWeatherUtils.setWeatherImg(weather.getNow().getCond().getCode()));
         tv_cityName.setText(weather.getBasic().getCity());
         tv_actualTemperature.setText(weather.getNow().getTmp() + "°");
         tv_weather.setText(weather.getNow().getCond().getTxt());
@@ -313,7 +302,7 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
         tv_fourWeather.setText(weather.getDaily_forecast().get(4).getCond().getTxt_d());
         img_fourWeather.setImageResource(UpdataWeatherUtils.setWeatherImg(weather.getDaily_forecast().get(4).getCond().getCode_d()));
 
-        img_detailWeather.setImageResource(UpdataWeatherUtils.setWeatherImg(weather.getDaily_forecast().get(0).getCond().getCode_d()));
+       img_detailWeather.setImageResource(UpdataWeatherUtils.setWeatherImg(weather.getDaily_forecast().get(0).getCond().getCode_d()));
         tv_detailWeather.setText(weather.getNow().getCond().getTxt());
         tv_detailTemp.setText(weather.getNow().getFl() + "°");
         tv_detailHumidity.setText(weather.getNow().getHum());
@@ -353,7 +342,38 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
         };
         lv_life.setAdapter(adapter);
         setListViewHeightBasedOnChildren(lv_life);
-        lv_life.setFocusable(false);
+        startMusic();
+    }
+
+    /**
+     * 播放音乐
+     */
+    private void startMusic() {
+        player=new MediaPlayer();
+        AssetFileDescriptor afd;
+        try {
+            afd = getContext().getAssets().openFd("rain.mp3");
+            player.setDataSource(afd.getFileDescriptor());
+            player.prepare();
+            player.start();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                    if(player!=null){
+                        player.stop();
+                        player=null;
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -388,7 +408,7 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
      * 从SharePreferences中读取用户收藏的城市，如果没有初始化为北京
      */
     public void initUserCollectCity() {
-        cityList = (List<City>) SharePreferencesUtil.readObject(context, ConstantUtils.USER_COLLECT_CITY);
+        cityList = (ArrayList<City>) SharePreferencesUtil.readObject(context, ConstantUtils.USER_COLLECT_CITY);
         if (cityList == null || cityList.size() == 0) {
             cityList = new ArrayList<>();
             City city = new City();

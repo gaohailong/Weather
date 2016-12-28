@@ -13,7 +13,27 @@ import com.example.buiderdream.weathor.R;
 
 public class UpdataWeatherUtils {
 
+    public static String setMusicURL(String id){
+        String src = "";
+        int windid = Integer.valueOf(id);
+        if (windid<200){
+            src = "sunny.mp3";
+        }else if(200<=windid&&windid<300){
+            src = "cold_wind.mp3";
+        }else if(300<=windid&&windid<400){
+            src = "thunder.mp3";
+            if (windid>304){
+                src = "rain.mp3";
+            }
+        }else if(400<=windid&&windid<500){
+            src = "";
+        }else {
+            src = "";
+        }
 
+
+        return src;
+    }
     public static int setGifImg(String id){
         int src = 0;
         int windid = Integer.valueOf(id);
