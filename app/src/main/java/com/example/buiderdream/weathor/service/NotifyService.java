@@ -44,17 +44,18 @@ public class NotifyService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        HeWeather weather = (HeWeather) SharePreferencesUtil.readObject(this, ConstantUtils.LOCATION_CITY_WEATHER);
+        HeWeather weather = (HeWeather) SharePreferencesUtil.readObject(this, ConstantUtils.LOCATION_CITY_WEATHER);
 //      当前城市
-//       weather.getBasic().getCity()
-        //当前城市温度
-//         weather.getNow().getTmp();
-//        UpdataWeatherUtils.setWeatherImg(weather.getNow().getCond().getCode());
-
         notification = new Notification();
         remoteViews = new RemoteViews(this.getPackageName(), R.layout.item_notify);
-        remoteViews.setTextViewText(R.id.noti_textView2, "111");
-        remoteViews.setTextViewText(R.id.noti_textView3,"1111111111");
+        if (weather!= null) {
+            String curCity = weather.getBasic().getCity()
+            //当前城市温度
+            String cutTemp = weather.getNow().getTmp();
+            UpdataWeatherUtils.setWeatherImg(weather.getNow().getCond().getCode());
+            remoteViews.setTextViewText(R.id.noti_textView2, curCity);
+            remoteViews.setTextViewText(R.id.noti_textView3, cutTemp);
+        }
         remoteViews.setImageViewResource(R.id.noti_imageView,R.drawable.w100);
         notification.contentView = remoteViews;
         notification.icon = R.drawable.btn_homeasup_default;

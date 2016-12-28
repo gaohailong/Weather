@@ -1,5 +1,8 @@
 package com.example.buiderdream.weathor.activitys;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -28,6 +31,7 @@ import java.util.List;
  */
 public class MainActivity extends FragmentActivity {
 
+
     private ViewPager vp_cityWeather;
     private FragmentPagerItems.Creator creater;//对节点的动态添加
     private ArrayList<Fragment> fragmentList;
@@ -37,12 +41,19 @@ public class MainActivity extends FragmentActivity {
 
     private static long currentTime = 0;
     private static long laseTime = 0;
+    AlarmManager manager;
+    PendingIntent pendingIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        manager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
         Intent intent = new Intent(MainActivity.this, NotifyService.class);
-        startService(intent);
+        pendingIntent = PendingIntent.getService(getApplicationContext(),1,intent,1);
+        manager.setRepeating(AlarmManager.RTC_WAKEUP,0,30000,pendingIntent);
+
         context = this;
         initView();
 
