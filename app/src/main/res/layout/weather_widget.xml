@@ -117,7 +117,7 @@
     <TextView
         android:text="@string/widget_suggest"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="30dp"
         android:id="@+id/widget_suggestion"
         android:gravity="center"
         android:textColor="@color/black"
@@ -126,6 +126,7 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:focusable="true"
         android:maxLines="1"
+        android:scrollHorizontally="true"
         android:duplicateParentState="false"
         android:focusableInTouchMode="true">
         <requestFocus

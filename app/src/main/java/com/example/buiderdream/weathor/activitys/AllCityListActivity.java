@@ -1,11 +1,8 @@
 package com.example.buiderdream.weathor.activitys;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,7 +23,6 @@ import com.example.buiderdream.weathor.utils.SharePreferencesUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,9 +37,6 @@ import okhttp3.Request;
  * @author 文捷
  */
 public class AllCityListActivity extends BaseActivity {
-    File dbFile = new File("data" + File.separator + "data" + File.separator
-            + "com.example.myweather" + File.separator + "databases"
-            + File.separator + "citys.db");
 
     private ListView listView;
     private EditText searchEdit;
@@ -51,7 +44,7 @@ public class AllCityListActivity extends BaseActivity {
     private ArrayAdapter<String> cityNameAdapter;
     List<City> collecCity = new ArrayList<City>();
     private ProgressBar pro_all_city;
-    CityDBHelper cityDB = new CityDBHelper(AllCityListActivity.this);
+    CityDBHelper cityDBHelper = new CityDBHelper(AllCityListActivity.this);
     List<CityInfo> cityInfos = new ArrayList<CityInfo>();
     /**
      * 异步任务结束后通知进行数据库添加操作，只在第一次执行添加
@@ -61,7 +54,7 @@ public class AllCityListActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what ==1){
-                if (cityDB.findCitys().size()==0){
+                if (cityDBHelper.findCitys().size()==0){
                     WriteToDB();
                 }
 
@@ -74,11 +67,13 @@ public class AllCityListActivity extends BaseActivity {
             @Override
             public void run() {
                 for (int i = 0; i < cityInfos.size(); i++) {
-                    cityDB.AddCitys(cityInfos.get(i));
+                    cityDBHelper.AddCitys(cityInfos.get(i));
                 }
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
+                        pro_all_city.setVisibility(View.GONE);
+
                         notifyListAdapter();
                     }
                 });
@@ -100,16 +95,18 @@ public class AllCityListActivity extends BaseActivity {
      */
     private void initListView() {
 
-        if (!dbFile.exists()||dbFile.length()==0) {
+        if (cityDBHelper.findCitys().size()==0) {
             doRequestData();
         }else{
+            pro_all_city.setVisibility(View.GONE);
+
             notifyListAdapter();
         }
 
     }
 
     private void notifyListAdapter() {
-        cityInfos = cityDB.findCitys();
+        cityInfos = cityDBHelper.findCitys();
         for (int i = 0; i < cityInfos.size(); i++) {
             cityNameList.add(cityInfos.get(i).getDistrict()+"-"+cityInfos.get(i).getCity());
         }
@@ -208,10 +205,8 @@ public class AllCityListActivity extends BaseActivity {
      */
     public void search_click(View v) {
         // 搜索
-        Toast.makeText(AllCityListActivity.this, "------------", Toast.LENGTH_SHORT).show();
         String searchCity = searchEdit.getText().toString();
-        cityInfos = cityDB.findCitys();
-        Toast.makeText(AllCityListActivity.this, searchCity, Toast.LENGTH_SHORT).show();
+        cityInfos = cityDBHelper.findCitys();
 
         cityNameList = new ArrayList<String>();
         for (int i = 0; i < cityInfos.size(); i++) {
@@ -223,7 +218,5 @@ public class AllCityListActivity extends BaseActivity {
         cityNameAdapter = new ArrayAdapter<String>(AllCityListActivity.this, android.R.layout.simple_list_item_1, cityNameList);
         listView.setAdapter(cityNameAdapter);
         cityNameAdapter.notifyDataSetChanged();
-
-
     }
 }
