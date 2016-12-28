@@ -42,10 +42,10 @@
         android:id="@+id/tv_grade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/img_life"
-        android:layout_marginStart="10dp"
-        android:layout_toEndOf="@+id/img_life"
         android:text="Medium Text"
         android:textColor="@color/white"
-        android:textSize="@dimen/mainFontSize" />
+        android:textSize="@dimen/mainFontSize"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/tv_content"
+        android:layout_marginTop="14dp" />
 </RelativeLayout>

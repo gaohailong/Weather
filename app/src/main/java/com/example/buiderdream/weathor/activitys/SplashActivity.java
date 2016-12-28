@@ -129,7 +129,7 @@ public class SplashActivity extends BaseActivity {
         manager.getAsync(url,new OkHttpClientManager.DataCallBack() {
             @Override
             public void requestFailure(Request request, IOException e) {
-
+                Toast.makeText(context,"失败了",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -156,6 +156,10 @@ public class SplashActivity extends BaseActivity {
             cityList.add(city);
         }else {
             if (!cityList.get(0).getCityName().equals(district)){
+                int cityIndex = cityList.indexOf(city);
+                if (cityIndex>0) {
+                    cityList.remove(city);
+                }
                 cityList.set(0,city);
             }
         }
@@ -217,8 +221,16 @@ public class SplashActivity extends BaseActivity {
      * 跳转到下一视图
      */
     private void nextActivity() {
-        Intent intent = new Intent(SplashActivity.this,MainActivity.class);
-        startActivity(intent);
+        boolean flag = getSharedPreferences(ConstantUtils.GUIDE_SP,MODE_PRIVATE).getBoolean("firstUse",true);
+        if (!flag){
+            Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(SplashActivity.this,GuideActivity.class);
+            startActivity(intent);
+        }
+
+
         finish();
     }
 }

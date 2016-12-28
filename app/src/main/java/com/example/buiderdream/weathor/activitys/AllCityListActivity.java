@@ -1,11 +1,9 @@
 package com.example.buiderdream.weathor.activitys;
 
-import android.database.sqlite.SQLiteDatabase;
+
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.example.buiderdream.weathor.R;
 import com.example.buiderdream.weathor.base.BaseActivity;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
@@ -67,7 +64,6 @@ public class AllCityListActivity extends BaseActivity {
                     }
                 }
                 notifyListAdapter();
-
             }
         }
     };
@@ -91,11 +87,6 @@ public class AllCityListActivity extends BaseActivity {
             pro_all_city.setVisibility(View.GONE);
             notifyListAdapter();
         }
-
-
-
-
-
     }
 
     private void notifyListAdapter() {

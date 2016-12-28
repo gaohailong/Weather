@@ -35,4 +35,6 @@ public class ConstantUtils {
     // 刷新数据
     public static final int REFRESH_DATA = 0x00001002;
 
+    //引导页记录常量
+    public static final String GUIDE_SP = "guideSharedPreference";
 }

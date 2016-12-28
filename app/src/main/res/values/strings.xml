@@ -13,10 +13,13 @@
     <string name="image_notify">图片</string>
     <!--闪屏页-->
     <string name="loading_location">正在加载您的位置...</string>
+    <string name="welcome">风里雨里</string>
+    <string name="welcome_write">我在这里等你</string>
     <!--城市列表-->
     <string name="search_city">请输入要搜索的城市</string>
     <string name="city_list">城市列表</string>
     <!--城市管理-->
     <string name="city_manager">城市管理</string>
-
+    <!--引导页-->
+    <string name="guide_immediately">立即进入</string>
 </resources>

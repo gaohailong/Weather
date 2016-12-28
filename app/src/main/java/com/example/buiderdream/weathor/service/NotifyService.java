@@ -49,7 +49,7 @@ public class NotifyService extends Service{
         notification = new Notification();
         remoteViews = new RemoteViews(this.getPackageName(), R.layout.item_notify);
         if (weather!= null) {
-            String curCity = weather.getBasic().getCity()
+            String curCity = weather.getBasic().getCity();
             //当前城市温度
             String cutTemp = weather.getNow().getTmp();
             UpdataWeatherUtils.setWeatherImg(weather.getNow().getCond().getCode());

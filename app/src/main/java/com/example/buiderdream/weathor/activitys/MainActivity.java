@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -39,10 +40,11 @@ public class MainActivity extends FragmentActivity {
     private Context context;
     private GifView gif_background;
 
-    private static long currentTime = 0;
-    private static long laseTime = 0;
+
     AlarmManager manager;
     PendingIntent pendingIntent;
+
+    private static long exitTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,4 +111,19 @@ public class MainActivity extends FragmentActivity {
             SharePreferencesUtil.saveObject(context,ConstantUtils.USER_COLLECT_CITY,cityList);
         }
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+            if((System.currentTimeMillis()-exitTime) > 2000){
+                Toast.makeText(context,"再按一次退出程序",Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

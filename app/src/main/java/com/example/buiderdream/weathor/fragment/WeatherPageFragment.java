@@ -19,6 +19,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ant.liao.GifView;
 import com.example.buiderdream.weathor.R;
@@ -30,6 +31,7 @@ import com.example.buiderdream.weathor.https.OkHttpClientManager;
 import com.example.buiderdream.weathor.utils.CommonAdapter;
 import com.example.buiderdream.weathor.utils.DateUtils;
 import com.example.buiderdream.weathor.utils.LifeInfo;
+import com.example.buiderdream.weathor.utils.NetWorkUtils;
 import com.example.buiderdream.weathor.utils.SharePreferencesUtil;
 import com.example.buiderdream.weathor.utils.UpdataWeatherUtils;
 import com.example.buiderdream.weathor.utils.ViewHolder;
@@ -136,7 +138,12 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
         } else {
             weatherPageFragment = inflater.inflate(R.layout.fragment_weatherpage, container, false);
             initView();
-            doRequestData(cityList.get(FragmentPagerItem.getPosition(getArguments())).getCityName());
+            if (NetWorkUtils.GetNetype(context)!=-1){
+                doRequestData(cityList.get(FragmentPagerItem.getPosition(getArguments())).getCityName());
+            }else {
+                Toast.makeText(context,"当前无网络",Toast.LENGTH_SHORT).show();
+            }
+
             return weatherPageFragment;
         }
     }
@@ -269,7 +276,7 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
         tv_cityName.setText(weather.getBasic().getCity());
         tv_actualTemperature.setText(weather.getNow().getTmp() + "°");
         tv_weather.setText(weather.getNow().getCond().getTxt());
-        tv_temperature.setText(weather.getDaily_forecast().get(0).getTmp().getMin() + "~" + weather.getDaily_forecast().get(0).getTmp().getMax());
+        tv_temperature.setText(weather.getDaily_forecast().get(0).getTmp().getMin() + "°~" + weather.getDaily_forecast().get(0).getTmp().getMax()+ "°");
         if (weather.getAqi() != null) {
             img_notification.setImageDrawable(UpdataWeatherUtils.getAirHintImg(context, weather.getAqi().getCity().getAqi()));
         }
