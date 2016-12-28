@@ -26,9 +26,9 @@ public class UpdataWeatherUtils {
                 src = R.raw.rain;
             }
         }else if(400<=windid&&windid<500){
-            src = R.raw.sunny;
+            src = R.raw.christmas;
         }else {
-            src = R.raw.sunny;
+            src = R.raw.warning;
         }
 
         return src;
