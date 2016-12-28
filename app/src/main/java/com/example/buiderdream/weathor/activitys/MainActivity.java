@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.Toast;
+
 import com.ant.liao.GifView;
 import com.example.buiderdream.weathor.R;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
@@ -32,6 +34,9 @@ public class MainActivity extends FragmentActivity {
     private List<City> cityList;
     private Context context;
     private GifView gif_background;
+
+    private static long currentTime = 0;
+    private static long laseTime = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +82,7 @@ public class MainActivity extends FragmentActivity {
         FragmentPagerItemAdapter fragmentadapter = new FragmentPagerItemAdapter(getSupportFragmentManager()
                 , creater.create());
         vp_cityWeather.setAdapter(fragmentadapter);
+
     }
 
     /**

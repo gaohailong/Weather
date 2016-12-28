@@ -1,18 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:weightSum="1">
 
-    <TextView
-        android:text="haha"
-        android:layout_width="258dp"
-        android:layout_height="46dp"
-        android:id="@+id/textView" />
 
-    <Button
-        android:text="啦啦啦啦恋恋"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/button" />
+    <RelativeLayout
+        android:id="@+id/widget_rela"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:background="#99ffffff"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
+                <TextView
+                    android:text="10:35"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/widget_time"
+                    android:textSize="28sp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:text="1°C"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/widget_temp"
+                    android:textSize="32sp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:layout_alignParentStart="true" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="20dp">
+                    <TextView
+                        android:id="@+id/widget_cond"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="晴"
+                        android:textColor="@color/black"
+                        android:layout_gravity="left"/>
+                    <TextView
+                        android:id="@+id/widget_aqi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="空气质量:良"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="5dp"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="45dp"
+            android:id="@+id/widget_img"
+            android:src="@drawable/widget_sunny"/>
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="10dp"
+            >
+
+            <TextView
+                android:text="微风"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/widget_wind"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:text="昌平"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/widget_city"
+                android:layout_below="@+id/widget_wind"
+                android:textColor="@color/black"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <TextView
+        android:text="穿衣建议"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:id="@+id/widget_suggestion"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:background="@color/paleturquoise"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:focusable="true"
+        android:singleLine="true"
+        android:duplicateParentState="false"
+        android:focusableInTouchMode="true">
+        <requestFocus
+            android:focusable="true"
+            android:duplicateParentState="false"
+            android:focusableInTouchMode="true"/>
+    </TextView>
+
+
+
+
+
 </LinearLayout>

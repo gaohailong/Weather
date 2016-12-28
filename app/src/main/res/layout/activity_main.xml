@@ -5,41 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.buiderdream.weathor.activitys.MainActivity">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#46A3FF">
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:background="@drawable/title_city"
-            android:onClick="citylist_click"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_centerInParent="true"
-            >
-            <TextView
-                android:id="@+id/main_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="简洁天气"
-                android:drawableLeft="@drawable/title_location"
-                android:textSize="23sp"
-                />
 
-        </LinearLayout>
-
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:onClick="share_click"
-            android:background="@drawable/title_share"/>
-    </RelativeLayout>
     <com.ant.liao.GifView
         android:id="@+id/gif_background"
         android:layout_width="match_parent"
