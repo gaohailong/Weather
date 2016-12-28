@@ -19,6 +19,7 @@ import com.example.buiderdream.weathor.constants.ConstantUtils;
 import com.example.buiderdream.weathor.entitys.City;
 import com.example.buiderdream.weathor.entitys.HeWeather;
 import com.example.buiderdream.weathor.https.OkHttpClientManager;
+import com.example.buiderdream.weathor.service.NotifyService;
 import com.example.buiderdream.weathor.utils.NetWorkUtils;
 import com.example.buiderdream.weathor.utils.SharePreferencesUtil;
 import com.google.gson.Gson;
@@ -50,6 +51,8 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+//        Intent intent = new Intent(SplashActivity.this, NotifyService.class);
+//        startService(intent);
         context = this;
         handler = new SplashHandler();
        if (NetWorkUtils.GetNetype(context)==-1){
@@ -58,6 +61,8 @@ public class SplashActivity extends BaseActivity {
            return;
        }
         getLoctionCity();
+
+
     }
     /**
      * 得到当前位置的经纬度
