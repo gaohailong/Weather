@@ -83,7 +83,7 @@ public class NotifyService extends Service{
         manager.getAsync(url, new OkHttpClientManager.DataCallBack() {
             @Override
             public void requestFailure(Request request, IOException e) {
-                Log.d("--->","fffffffffff");
+
             }
 
             @Override
@@ -98,8 +98,8 @@ public class NotifyService extends Service{
                 Gson gson = new Gson();
                 weather = gson.fromJson(
                         jsonObject2.toString(), HeWeather.class);
-                handler.sendEmptyMessage(1234);
-                Log.d("--->","sssssss");
+                handler.sendEmptyMessage(ConstantUtils.SPLASH_NOTIFY);
+
             }
         });
     }
@@ -109,8 +109,7 @@ public class NotifyService extends Service{
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
-                case 1234:
-                    Log.d("--->","sUtil.saveObject(getAp");
+                case ConstantUtils.SPLASH_NOTIFY:
                     SharePreferencesUtil.saveObject(getApplication(), ConstantUtils.LOCATION_CITY_WEATHER, weather);
                     setNotification();
                     break;
@@ -145,8 +144,6 @@ public class NotifyService extends Service{
         PendingIntent  pendingIntent = PendingIntent.getActivity(this
                 ,0,intents,0);
         remoteViews.setOnClickPendingIntent(R.id.item_noti,pendingIntent);
-        Log.d("--->","0000000");
-
         nm = (NotificationManager) getSystemService(Service.NOTIFICATION_SERVICE);
         nm.notify(1,notification);
     }
