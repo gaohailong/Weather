@@ -222,7 +222,7 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
         detail_tv_CO = (TextView) weatherPageFragment.findViewById(R.id.detail_tv_CO);
 
         lv_life = (ListView) weatherPageFragment.findViewById(R.id.lv_life);
-
+        lv_life.setFocusable(false);
         ViewGroup.LayoutParams params = rl_content.getLayoutParams();
         WindowManager wm = (WindowManager) getContext()
                 .getSystemService(Context.WINDOW_SERVICE);
@@ -349,6 +349,7 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
         };
         lv_life.setAdapter(adapter);
         setListViewHeightBasedOnChildren(lv_life);
+        lv_life.setFocusable(false);
         startMusic();
     }
 

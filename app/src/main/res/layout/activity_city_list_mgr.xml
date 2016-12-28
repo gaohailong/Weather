@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_city_list_mgr"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.buiderdream.weathor.activitys.CityListMgrActivity">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#46A3FF">
+    tools:context="com.example.buiderdream.weathor.activitys.CityListMgrActivity"
+    android:background="@drawable/guide2">
 
+    <RelativeLayout
+        android:id="@+id/rl_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <TextView
             android:padding="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="23sp"
+            android:textColor="@color/white"
             android:layout_centerInParent="true"
             android:text="@string/city_manager"/>
 
@@ -25,7 +26,8 @@
             android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:contentDescription="@string/image_notify"
-            android:src="@drawable/btn_homeasup_default"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_back_64px"
             android:onClick="back_click"/>
         <ImageView
             android:id="@+id/imageView2"
@@ -34,6 +36,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/image_notify"
+            android:scaleType="fitXY"
             android:src="@drawable/title_city"
             android:onClick="addCity_click"/>
 
@@ -41,7 +44,10 @@
     <ListView
         android:id="@+id/cityList_mgr_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_toolbar"
+        android:divider="@color/white"
+        android:dividerHeight="0.5dp"/>
 
 
-</LinearLayout>
+</RelativeLayout>

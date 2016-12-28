@@ -23,7 +23,9 @@
 
     <!--引导页-->
     <string name="guide_immediately">立即进入</string>
-
+    <string name="guide_page_one">风雨相随</string>
+    <string name="guide_page_two">一生陪伴</string>
+    <!--挂件-->
     <string name="widget_time">10:35</string>
     <string name="widget_temp">1°C</string>
     <string name="widget_aqi">空气质量:良</string>
@@ -32,5 +34,6 @@
     <string name="widget_suggest">穿衣建议</string>
     <string name="widget_wind">微风</string>
 
->>>>>>> de344cb2939b50eebbb595d5678d11ead065ee17
+
+
 </resources>

@@ -1,47 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_all_city_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.buiderdream.weathor.activitys.AllCityListActivity"
-    android:orientation="vertical">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#46A3FF">
-
-        <TextView
-            android:id="@+id/textView1"
-            android:padding="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/city_list"
-            android:textSize="23sp"
-            android:layout_centerInParent="true"/>
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/image_notify"
-            android:src="@drawable/btn_homeasup_default"
-            android:onClick="back_click"/>
-
-    </RelativeLayout>
+    android:background="@drawable/guide2"
+    >
 
     <LinearLayout
+        android:id="@+id/ll_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_toolbar">
 
         <EditText
             android:id="@+id/searchEdit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColorHint="@color/white"
             android:hint="@string/search_city"
             android:labelFor="@+id/searchEdit"
+            android:textColor="@color/white"
             android:maxLines="1"
             android:ems="10" />
         <TextView
@@ -52,21 +33,25 @@
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="40dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:onClick="search_click"
+            android:scaleType="fitXY"
             android:contentDescription="@string/image_notify"
-            android:src="@drawable/biz_news_column_subscribe_search_icon" />
+            android:src="@mipmap/icon_search" />
 
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_search">
 
         <ListView
             android:id="@+id/city_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:divider="@color/white"
+            android:dividerHeight="0.5dp"/>
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
@@ -77,4 +62,34 @@
             android:layout_centerInParent="true" />
     </RelativeLayout>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rl_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/city_list"
+            android:textSize="23sp"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/image_notify"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_back_64px"
+            android:onClick="back_click"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

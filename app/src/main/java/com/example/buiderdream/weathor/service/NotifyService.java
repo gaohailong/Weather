@@ -10,11 +10,13 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.example.buiderdream.weathor.R;
 import com.example.buiderdream.weathor.activitys.MainActivity;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
+import com.example.buiderdream.weathor.entitys.City;
 import com.example.buiderdream.weathor.entitys.HeWeather;
 import com.example.buiderdream.weathor.https.OkHttpClientManager;
 import com.example.buiderdream.weathor.utils.SharePreferencesUtil;
@@ -25,7 +27,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Request;
@@ -39,7 +43,7 @@ public class NotifyService extends Service{
 
     private  NotiHandler handler;
     private HeWeather weather;
-    private Context context = this;
+
     Notification notification;
     RemoteViews remoteViews;
     NotificationManager nm;
@@ -61,10 +65,10 @@ public class NotifyService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        HeWeather weathers = (HeWeather) SharePreferencesUtil.readObject(this, ConstantUtils.LOCATION_CITY_WEATHER);
-        String curCity = weathers.getBasic().getCity();
-        doRequestData(curCity);
 
+        List<City> list = (ArrayList<City>) SharePreferencesUtil.readObject(getApplication(),ConstantUtils.USER_COLLECT_CITY);
+        doRequestData(list.get(0).getCityName());
+        handler = new  NotiHandler();
 //        setNotification();
         return super.onStartCommand(intent, flags, startId);
     }
@@ -79,6 +83,7 @@ public class NotifyService extends Service{
         manager.getAsync(url, new OkHttpClientManager.DataCallBack() {
             @Override
             public void requestFailure(Request request, IOException e) {
+                Log.d("--->","fffffffffff");
             }
 
             @Override
@@ -93,7 +98,8 @@ public class NotifyService extends Service{
                 Gson gson = new Gson();
                 weather = gson.fromJson(
                         jsonObject2.toString(), HeWeather.class);
-                handler.sendEmptyMessage(ConstantUtils.SPLASH_GET_DATA);
+                handler.sendEmptyMessage(1234);
+                Log.d("--->","sssssss");
             }
         });
     }
@@ -103,21 +109,20 @@ public class NotifyService extends Service{
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
-                case ConstantUtils.SPLASH_GET_DATA:
-                    SharePreferencesUtil.saveObject(context, ConstantUtils.LOCATION_CITY_WEATHER, weather);
+                case 1234:
+                    Log.d("--->","sUtil.saveObject(getAp");
+                    SharePreferencesUtil.saveObject(getApplication(), ConstantUtils.LOCATION_CITY_WEATHER, weather);
                     setNotification();
                     break;
             }
 
         }
     }
-
-
     private void setNotification() {
         HeWeather weather = (HeWeather) SharePreferencesUtil.readObject(this, ConstantUtils.LOCATION_CITY_WEATHER);
         //  当前城市
         notification = new Notification();
-        notification.icon = R.drawable.btn_homeasup_default;
+        notification.icon = R.mipmap.ic_weather_48px;
         notification.tickerText = "新通知";
         notification.defaults = Notification.DEFAULT_ALL;
         remoteViews = new RemoteViews(this.getPackageName(), R.layout.item_notify);
@@ -140,7 +145,7 @@ public class NotifyService extends Service{
         PendingIntent  pendingIntent = PendingIntent.getActivity(this
                 ,0,intents,0);
         remoteViews.setOnClickPendingIntent(R.id.item_noti,pendingIntent);
-
+        Log.d("--->","0000000");
 
         nm = (NotificationManager) getSystemService(Service.NOTIFICATION_SERVICE);
         nm.notify(1,notification);

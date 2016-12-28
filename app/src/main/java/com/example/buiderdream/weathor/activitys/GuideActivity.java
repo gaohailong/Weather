@@ -36,7 +36,6 @@ public class GuideActivity extends BaseActivity {
         vp=(ViewPager) findViewById(R.id.lead_vp);
         list=new ArrayList<View>();
         list.add(getLayoutInflater().inflate(R.layout.vp_guide1, null));
-        list.add(getLayoutInflater().inflate(R.layout.vp_guide2, null));
         list.add(getLayoutInflater().inflate(R.layout.vp_guide3, null));
         View vp_guide4 = getLayoutInflater().inflate(R.layout.vp_guide4, null);
         list.add(vp_guide4);
@@ -81,8 +80,5 @@ public class GuideActivity extends BaseActivity {
             container.addView(v);
             return v;
         }
-
-
-
-    }
+            }
 }

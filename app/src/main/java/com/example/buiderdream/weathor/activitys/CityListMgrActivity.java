@@ -1,11 +1,14 @@
 package com.example.buiderdream.weathor.activitys;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ListView;
 
+import com.ant.liao.GifView;
 import com.example.buiderdream.weathor.R;
 import com.example.buiderdream.weathor.base.BaseActivity;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
@@ -24,6 +27,7 @@ public class CityListMgrActivity extends BaseActivity {
     private ListView listView;
     private List<City> cityList;
     private CommonAdapter<City> adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +58,7 @@ public class CityListMgrActivity extends BaseActivity {
         adapter = new CommonAdapter<City>(CityListMgrActivity.this,cityList,R.layout.item_city_list) {
             @Override
             public void convert(ViewHolder helper, City item) {
-                helper.setText(R.id.cityName,item.getCityName());
+                helper.setText(R.id.tv_cityName,item.getCityName());
             }
         };
         listView.setAdapter(adapter);
