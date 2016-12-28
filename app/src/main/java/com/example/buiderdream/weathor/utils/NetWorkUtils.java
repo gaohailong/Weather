@@ -7,7 +7,7 @@ import android.net.NetworkInfo;
 /**
  * Created by Administrator on 2016/12/28.
  * 网络状态
- * @author 李秉龙
+ * @author 郭宪宗
  */
 
 public class NetWorkUtils {

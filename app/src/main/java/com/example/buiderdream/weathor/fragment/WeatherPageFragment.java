@@ -1,13 +1,14 @@
 package com.example.buiderdream.weathor.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ant.liao.GifView;
 import com.example.buiderdream.weathor.R;
 import com.example.buiderdream.weathor.activitys.CityListMgrActivity;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
@@ -30,7 +30,7 @@ import com.example.buiderdream.weathor.entitys.HeWeather;
 import com.example.buiderdream.weathor.https.OkHttpClientManager;
 import com.example.buiderdream.weathor.utils.CommonAdapter;
 import com.example.buiderdream.weathor.utils.DateUtils;
-import com.example.buiderdream.weathor.utils.LifeInfo;
+import com.example.buiderdream.weathor.entitys.LifeInfo;
 import com.example.buiderdream.weathor.utils.NetWorkUtils;
 import com.example.buiderdream.weathor.utils.SharePreferencesUtil;
 import com.example.buiderdream.weathor.utils.UpdataWeatherUtils;
@@ -57,6 +57,7 @@ import okhttp3.Request;
  * @author 李秉龙
  */
 public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+    private RelativeLayout rl_all;
     private Context context;
     private List<City> cityList;
     private HeWeather weather;
@@ -127,6 +128,10 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
 
     private MediaPlayer player;  //播放音乐
 
+    public interface OnButtonClick{
+        public void onButtonClick();//value为传入的值
+    }
+    private OnButtonClick listener;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -149,6 +154,11 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
     }
 
     private void initView() {
+        rl_all = (RelativeLayout) weatherPageFragment.findViewById(R.id.rl_all);
+        if (weather==null){
+            rl_all.setVisibility(View.GONE);
+        }
+
         mSwipeLayout = (SwipeRefreshLayout) weatherPageFragment.findViewById(R.id.id_swipe_ly);
 
         mSwipeLayout.setOnRefreshListener(this);
@@ -163,13 +173,21 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
         tv_weather = (TextView) weatherPageFragment.findViewById(R.id.tv_weather);
         tv_temperature = (TextView) weatherPageFragment.findViewById(R.id.tv_temperature);
         img_weather = (ImageView) weatherPageFragment.findViewById(R.id.img_weather);
-
+//
+//        img_addCity.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getActivity(), CityListMgrActivity.class);
+//                startActivityForResult(intent, 1000);
+//
+//            }
+//        });
         img_addCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), CityListMgrActivity.class);
-                startActivity(intent);
-
+                if(listener != null){
+                    listener.onButtonClick();
+                }
             }
         });
         tv_week = (TextView) weatherPageFragment.findViewById(R.id.tv_week);
@@ -236,6 +254,21 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
         rl_content.setLayoutParams(params);
 
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(activity instanceof OnButtonClick){
+            listener = (OnButtonClick)activity;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        listener = null;
+    }
+
 
 
     private void doRequestData(String cityName) {
@@ -436,6 +469,7 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
             super.handleMessage(msg);
             switch (msg.what) {
                 case ConstantUtils.WEATHERPAGEFRRAGMENT_GET_DATA:
+                    rl_all.setVisibility(View.VISIBLE);
                     upDataView();
                     mSwipeLayout.setRefreshing(false);
                     break;

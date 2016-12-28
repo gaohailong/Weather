@@ -1,7 +1,8 @@
-package com.example.buiderdream.weathor.utils;
+package com.example.buiderdream.weathor.entitys;
 
 /**
  * Created by Administrator on 2016/12/27.
+ * @author 郭宪宗
  */
 
 public class LifeInfo {

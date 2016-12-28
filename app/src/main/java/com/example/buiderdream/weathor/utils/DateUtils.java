@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * Created by Administrator on 2016/12/15.
- * @author 李秉龙
+ * @author 王特
  * 时间工具类
  */
 
@@ -18,6 +18,7 @@ public class DateUtils {
      *
      * @param timestamp
      * @return
+     *
      */
     public static String converTime(long timestamp) {
         long currentSeconds = System.currentTimeMillis() / 1000;

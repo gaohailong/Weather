@@ -15,6 +15,7 @@ import android.widget.RemoteViews;
 
 import com.example.buiderdream.weathor.R;
 import com.example.buiderdream.weathor.activitys.MainActivity;
+import com.example.buiderdream.weathor.activitys.SplashActivity;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
 import com.example.buiderdream.weathor.entitys.City;
 import com.example.buiderdream.weathor.entitys.HeWeather;
@@ -139,7 +140,7 @@ public class NotifyService extends Service{
         notification.when =System.currentTimeMillis();
 
 
-        Intent intents = new Intent(this, MainActivity.class);
+        Intent intents = new Intent(this, SplashActivity.class);
 
         PendingIntent  pendingIntent = PendingIntent.getActivity(this
                 ,0,intents,0);

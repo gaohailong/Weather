@@ -34,7 +34,19 @@
     <string name="widget_city">昌平</string>
     <string name="widget_suggest">穿衣建议</string>
     <string name="widget_wind">微风</string>
-
+    <string name="delete">删除</string>
+    <string name="pm">PM2.5</string>
+    <string name="pmcontent">入肺颗粒物</string>
+    <string name="pmten">PM10</string>
+    <string name="pmtencentent">可吸入颗粒物</string>
+    <string name="so">SO2</string>
+    <string name="cocentent">二氧化硫</string>
+    <string name="no">NO2</string>
+    <string name="nocentent">二氧化氮</string>
+    <string name="o">O3</string>
+    <string name="ocentent">臭氧</string>
+    <string name="co">CO</string>
+    <string name="cotext">一氧化碳</string>
 
 
 </resources>

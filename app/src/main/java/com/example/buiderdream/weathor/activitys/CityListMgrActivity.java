@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.ant.liao.GifView;
 import com.example.buiderdream.weathor.R;
@@ -23,7 +25,7 @@ import java.util.List;
  * 用户添加的城市列表
  * @author 文捷
  */
-public class CityListMgrActivity extends BaseActivity {
+public class CityListMgrActivity extends BaseActivity implements AdapterView.OnItemClickListener{
     private ListView listView;
     private List<City> cityList;
     private CommonAdapter<City> adapter;
@@ -57,11 +59,20 @@ public class CityListMgrActivity extends BaseActivity {
         //给listView加载数据的adapter
         adapter = new CommonAdapter<City>(CityListMgrActivity.this,cityList,R.layout.item_city_list) {
             @Override
-            public void convert(ViewHolder helper, City item) {
+            public void convert(ViewHolder helper, final City item) {
                 helper.setText(R.id.tv_cityName,item.getCityName());
+                TextView tv = helper.getView(R.id.tv_delete);
+                tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        cityList.remove(item);
+                         adapter.notifyDataSetChanged();
+                    }
+                });
             }
         };
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
     }
 
     private void initView() {
@@ -73,6 +84,24 @@ public class CityListMgrActivity extends BaseActivity {
         startActivity(intent);
     }
     public void back_click(View view) {
+      stopActivity();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Intent intent = new Intent();
+        intent.putExtra("result", i);
+        //设置回传的意图p
+        setResult(1001, intent);
+        stopActivity();
+
+    }
+
+    private void stopActivity() {
+        if (cityList!=null){
+            SharePreferencesUtil.saveObject(CityListMgrActivity.this, ConstantUtils.USER_COLLECT_CITY,cityList);
+        }
         finish();
     }
+
 }

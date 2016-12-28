@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rl_all"
    >
 
     <TextView
@@ -589,12 +590,13 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin">
+                android:layout_marginStart="@dimen/activity_horizontal_margin">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:id="@+id/linear1">
+                    android:id="@+id/linear1"
+                    android:baselineAligned="false">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -610,7 +612,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
-                                android:text="PM2.5"
+                                android:text="@string/pm"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
                             <TextView
@@ -620,13 +622,14 @@
                                 android:layout_weight="1"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"
-                                android:text="19"/>
+                                />
                         </LinearLayout>
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
-                            android:text="入肺颗粒物"
+                            android:text="@string/pmcontent"
                             android:textColor="#778899"/>
                     </LinearLayout>
                     <LinearLayout
@@ -643,7 +646,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="PM10"
+                                android:text="@string/pmten"
                                 android:layout_weight="2"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
@@ -651,7 +654,6 @@
                                 android:id="@+id/detail_tv_pm10"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="19"
                                 android:layout_weight="1"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
@@ -661,7 +663,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
-                            android:text="可吸入颗粒物"
+                            android:text="@string/pmtencentent"
                             android:textColor="#778899"/>
                     </LinearLayout>
                     <LinearLayout
@@ -677,7 +679,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="SO2"
+                                android:text="@string/so"
                                 android:layout_weight="3"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
@@ -685,7 +687,6 @@
                                 android:id="@+id/detail_tv_so2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="19"
                                 android:layout_weight="1"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
@@ -694,7 +695,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
-                            android:text="二氧化硫"
+                            android:text="@string/cocentent"
                             android:textColor="#778899"/>
 
                     </LinearLayout>
@@ -705,7 +706,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_below="@id/linear1"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:baselineAligned="false">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -721,7 +723,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="NO2"
+                                android:text="@string/no"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
                             <TextView
@@ -731,13 +733,13 @@
                                 android:layout_weight="1"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"
-                                android:text="19"/>
+                            />
                         </LinearLayout>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
-                            android:text="二氧化氮"
+                            android:text="@string/nocentent"
                             android:textColor="#778899"/>
                     </LinearLayout>
                     <LinearLayout
@@ -754,7 +756,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="O3"
+                                android:text="@string/o"
                                 android:layout_weight="4"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
@@ -762,7 +764,6 @@
                                 android:id="@+id/detail_tv_O3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="19"
                                 android:layout_weight="1"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
@@ -772,7 +773,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
-                            android:text="臭氧"
+                            android:text="@string/ocentent"
                             android:textColor="#778899"/>
                     </LinearLayout>
                     <LinearLayout
@@ -788,7 +789,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="CO"
+                                android:text="@string/co"
                                 android:layout_weight="3"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
@@ -796,7 +797,6 @@
                                 android:id="@+id/detail_tv_CO"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="19"
                                 android:layout_weight="1"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
@@ -805,7 +805,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
-                            android:text="一氧化碳"
+                            android:text="@string/cotext"
                             android:textColor="#778899"/>
 
                     </LinearLayout>

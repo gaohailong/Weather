@@ -28,9 +28,10 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2016/12/22.
+ *
  * @author 李秉龙
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements WeatherPageFragment.OnButtonClick {
 
 
     private ViewPager vp_cityWeather;
@@ -39,6 +40,7 @@ public class MainActivity extends FragmentActivity {
     private List<City> cityList;
     private Context context;
     private GifView gif_background;
+    private static int currItem = 0;
 
 
     AlarmManager manager;
@@ -50,15 +52,13 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         manager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
         Intent intent = new Intent(MainActivity.this, NotifyService.class);
-        pendingIntent = PendingIntent.getService(getApplicationContext(),1,intent,0);
-        manager.setRepeating(AlarmManager.RTC_WAKEUP,0,1000*60,pendingIntent);
+        pendingIntent = PendingIntent.getService(getApplicationContext(), 1, intent, 0);
+        manager.setRepeating(AlarmManager.RTC_WAKEUP, 0, 1000 * 60, pendingIntent);
 
         context = this;
         initView();
-
 
 
     }
@@ -95,27 +95,29 @@ public class MainActivity extends FragmentActivity {
         FragmentPagerItemAdapter fragmentadapter = new FragmentPagerItemAdapter(getSupportFragmentManager()
                 , creater.create());
         vp_cityWeather.setAdapter(fragmentadapter);
-
+        vp_cityWeather.setCurrentItem(currItem);
+        currItem=0;
     }
 
     /**
-     *  从SharePreferences中读取用户收藏的城市，如果没有初始化为北京
+     * 从SharePreferences中读取用户收藏的城市，如果没有初始化为北京
      */
-       public void initUserCollectCity() {
+    public void initUserCollectCity() {
         cityList = (List<City>) SharePreferencesUtil.readObject(context, ConstantUtils.USER_COLLECT_CITY);
-        if (cityList==null||cityList.size()==0){
+        if (cityList == null || cityList.size() == 0) {
             cityList = new ArrayList<>();
             City city = new City();
             city.setCityName("北京");
             cityList.add(city);
-            SharePreferencesUtil.saveObject(context,ConstantUtils.USER_COLLECT_CITY,cityList);
+            SharePreferencesUtil.saveObject(context, ConstantUtils.USER_COLLECT_CITY, cityList);
         }
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
-            if((System.currentTimeMillis()-exitTime) > 2000){
-                Toast.makeText(context,"再按一次退出程序",Toast.LENGTH_SHORT).show();
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(context, "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {
                 finish();
@@ -126,4 +128,17 @@ public class MainActivity extends FragmentActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    public void onButtonClick() {
+        Intent intent = new Intent(MainActivity.this, CityListMgrActivity.class);
+        startActivityForResult(intent, 1000);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1000&&resultCode==1001){
+            int result = data.getIntExtra("result",0);
+            currItem = result;
+        }
+    }
 }

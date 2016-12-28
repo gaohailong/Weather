@@ -19,7 +19,7 @@ public class ConstantUtils {
     //聚合经纬度地址
     public static final String JUHELATLON_URL = "http://apis.juhe.cn/geo/";
     //聚合经纬度key
-    public static final String JUHELATLON_KEY = "58d95a0967b92dd6af333445b2baa443";
+    public static final String JUHELATLON_KEY = "60d42790ff96bbf1678e9f6c92211310";
 
     //保存用户关注的城市
     public static final String USER_COLLECT_CITY = "userColloctCitySP";

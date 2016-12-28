@@ -11,6 +11,7 @@ import android.widget.RemoteViews;
 
 import com.example.buiderdream.weathor.R;
 import com.example.buiderdream.weathor.activitys.MainActivity;
+import com.example.buiderdream.weathor.activitys.SplashActivity;
 import com.example.buiderdream.weathor.appwidget.WeatherWidget;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
 import com.example.buiderdream.weathor.entitys.HeWeather;
@@ -101,7 +102,7 @@ public class WeatherService extends Service {
             }
         }
 
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,intent,0);
         rv.setOnClickPendingIntent(R.id.widget_rela,pendingIntent);
 

@@ -14,7 +14,10 @@ import com.example.buiderdream.weathor.base.BaseActivity;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
 
 import java.util.ArrayList;
-
+/**
+ * Created by Administrator on 2016/12/22.
+ * @author 王特
+ */
 public class GuideActivity extends BaseActivity {
     private ViewPager vp;
     private ArrayList<View> list;

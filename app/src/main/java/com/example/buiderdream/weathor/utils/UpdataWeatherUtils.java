@@ -9,6 +9,7 @@ import com.example.buiderdream.weathor.R;
 /**
  * Created by Administrator on 2016/12/27.
  * 更新界面的一些封装方法
+ *@author 郭宪宗
  */
 
 public class UpdataWeatherUtils {
@@ -50,8 +51,6 @@ public class UpdataWeatherUtils {
         }else {
             src = R.drawable.gif_default;
         }
-
-
         return src;
     }
 
