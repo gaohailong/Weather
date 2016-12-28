@@ -1,6 +1,7 @@
 package com.example.buiderdream.weathor.activitys;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -11,6 +12,7 @@ import com.example.buiderdream.weathor.R;
 import com.example.buiderdream.weathor.constants.ConstantUtils;
 import com.example.buiderdream.weathor.entitys.City;
 import com.example.buiderdream.weathor.fragment.WeatherPageFragment;
+import com.example.buiderdream.weathor.service.NotifyService;
 import com.example.buiderdream.weathor.utils.SharePreferencesUtil;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -34,8 +36,13 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = new Intent(MainActivity.this, NotifyService.class);
+        startService(intent);
         context = this;
         initView();
+
+
+
     }
 
 
