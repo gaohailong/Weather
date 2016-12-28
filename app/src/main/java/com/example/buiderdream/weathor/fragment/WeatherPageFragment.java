@@ -264,7 +264,7 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
      * 更新界面
      */
     private void upDataView() {
-     
+
         img_weather.setImageResource(UpdataWeatherUtils.setWeatherImg(weather.getNow().getCond().getCode()));
         tv_cityName.setText(weather.getBasic().getCity());
         tv_actualTemperature.setText(weather.getNow().getTmp() + "°");
@@ -302,7 +302,7 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
         tv_fourWeather.setText(weather.getDaily_forecast().get(4).getCond().getTxt_d());
         img_fourWeather.setImageResource(UpdataWeatherUtils.setWeatherImg(weather.getDaily_forecast().get(4).getCond().getCode_d()));
 
-       img_detailWeather.setImageResource(UpdataWeatherUtils.setWeatherImg(weather.getDaily_forecast().get(0).getCond().getCode_d()));
+        img_detailWeather.setImageResource(UpdataWeatherUtils.setWeatherImg(weather.getDaily_forecast().get(0).getCond().getCode_d()));
         tv_detailWeather.setText(weather.getNow().getCond().getTxt());
         tv_detailTemp.setText(weather.getNow().getFl() + "°");
         tv_detailHumidity.setText(weather.getNow().getHum());
@@ -349,25 +349,18 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
      * 播放音乐
      */
     private void startMusic() {
-        player=new MediaPlayer();
-        AssetFileDescriptor afd;
-        try {
-            afd = getContext().getAssets().openFd("rain.mp3");
-            player.setDataSource(afd.getFileDescriptor());
-            player.prepare();
-            player.start();
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
+        player = new MediaPlayer();
+        player = MediaPlayer.create(context, UpdataWeatherUtils.setMusicURL(weather.getNow().getCond().getCode()));
+        player.start();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     Thread.sleep(2000);
-                    if(player!=null){
+                    if (player != null) {
                         player.stop();
-                        player=null;
+                        player = null;
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -419,7 +412,7 @@ public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-        handler.sendEmptyMessageDelayed(ConstantUtils.REFRESH_DATA,2000);
+        handler.sendEmptyMessageDelayed(ConstantUtils.REFRESH_DATA, 2000);
     }
 
     class WeatherPageFragmentHandler extends Handler {
