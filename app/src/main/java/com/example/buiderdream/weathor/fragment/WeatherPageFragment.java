@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,9 +25,12 @@ import com.example.buiderdream.weathor.constants.ConstantUtils;
 import com.example.buiderdream.weathor.entitys.City;
 import com.example.buiderdream.weathor.entitys.HeWeather;
 import com.example.buiderdream.weathor.https.OkHttpClientManager;
+import com.example.buiderdream.weathor.utils.CommonAdapter;
 import com.example.buiderdream.weathor.utils.DateUtils;
+import com.example.buiderdream.weathor.utils.LifeInfo;
 import com.example.buiderdream.weathor.utils.SharePreferencesUtil;
 import com.example.buiderdream.weathor.utils.UpdataWeatherUtils;
+import com.example.buiderdream.weathor.utils.ViewHolder;
 import com.google.gson.Gson;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 
@@ -46,12 +52,14 @@ import okhttp3.Request;
  *
  * @author 李秉龙
  */
-public class WeatherPageFragment extends Fragment {
+public class WeatherPageFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private Context context;
     private List<City> cityList;
     private HeWeather weather;
     private View weatherPageFragment;
     private WeatherPageFragmentHandler handler;
+
+    private SwipeRefreshLayout mSwipeLayout;
 
     private ImageView img_addCity;  //添加城市
     private TextView tv_cityName;  //城市名
@@ -109,6 +117,10 @@ public class WeatherPageFragment extends Fragment {
     private RelativeLayout rl_bottomView;   //底部标题
     private LinearLayout gv_fourDay;         //未来四天数据
 
+    private ListView lv_life;  //生活提示
+    private List<LifeInfo> lifeInfoList;  //生活数据
+    private CommonAdapter<LifeInfo> adapter;
+
     private GifView gif_background;   //gif背景图
 
 
@@ -129,7 +141,14 @@ public class WeatherPageFragment extends Fragment {
     }
 
     private void initView() {
+        mSwipeLayout = (SwipeRefreshLayout) weatherPageFragment.findViewById(R.id.id_swipe_ly);
 
+        mSwipeLayout.setOnRefreshListener(this);
+        mSwipeLayout.setColorSchemeColors
+                (getResources().getColor(android.R.color.holo_blue_bright),
+                        getResources().getColor(android.R.color.holo_green_light),
+                        getResources().getColor(android.R.color.holo_orange_light),
+                        getResources().getColor(android.R.color.holo_red_light));
         gif_background = (GifView) getActivity().findViewById(R.id.gif_background);
 
         img_addCity = (ImageView) weatherPageFragment.findViewById(R.id.img_addCity);
@@ -196,6 +215,7 @@ public class WeatherPageFragment extends Fragment {
         detail_tv_O3 = (TextView) weatherPageFragment.findViewById(R.id.detail_tv_O3);
         detail_tv_CO = (TextView) weatherPageFragment.findViewById(R.id.detail_tv_CO);
 
+        lv_life = (ListView) weatherPageFragment.findViewById(R.id.lv_life);
 
         ViewGroup.LayoutParams params = rl_content.getLayoutParams();
         WindowManager wm = (WindowManager) getContext()
@@ -245,9 +265,9 @@ public class WeatherPageFragment extends Fragment {
      * 更新界面
      */
     private void upDataView() {
-        // 设置Gif图片源
-//   gif_background.setGifImage(UpdataWeatherUtils.setGifImg(weather.getDaily_forecast().get(0).getCond().getCode_d()));
-        // 设置显示的大小，拉伸或者压缩
+//        // 设置Gif图片源
+//        gif_background.setGifImage(UpdataWeatherUtils.setGifImg(weather.getDaily_forecast().get(0).getCond().getCode_d()));
+//        // 设置显示的大小，拉伸或者压缩
 //        WindowManager wm = (WindowManager) context
 //                .getSystemService(Context.WINDOW_SERVICE);
 //        int width = wm.getDefaultDisplay().getWidth();
@@ -261,8 +281,8 @@ public class WeatherPageFragment extends Fragment {
         tv_actualTemperature.setText(weather.getNow().getTmp() + "°");
         tv_weather.setText(weather.getNow().getCond().getTxt());
         tv_temperature.setText(weather.getDaily_forecast().get(0).getTmp().getMin() + "~" + weather.getDaily_forecast().get(0).getTmp().getMax());
-        if (weather.getAqi()!=null){
-            img_notification.setImageDrawable(UpdataWeatherUtils.getAirHintImg(context,weather.getAqi().getCity().getAqi()));
+        if (weather.getAqi() != null) {
+            img_notification.setImageDrawable(UpdataWeatherUtils.getAirHintImg(context, weather.getAqi().getCity().getAqi()));
         }
         tv_airGrade.setText(weather.getSuggestion().getAir().getBrf());
         tv_airHint.setText(weather.getSuggestion().getAir().getTxt());
@@ -299,14 +319,14 @@ public class WeatherPageFragment extends Fragment {
         tv_detailHumidity.setText(weather.getNow().getHum());
         tv_detailWind.setText(weather.getNow().getWind().getDir() + weather.getNow().getWind().getSc());
 
-        if (weather.getAqi()==null||weather.getAqi().equals("")){
+        if (weather.getAqi() == null || weather.getAqi().equals("")) {
             detail_tv_pm25.setText("暂无数据");
             detail_tv_pm10.setText("暂无数据");
             detail_tv_so2.setText("暂无数据");
             detail_tv_NO2.setText("暂无数据");
             detail_tv_O3.setText("暂无数据");
             detail_tv_CO.setText("暂无数据");
-        }else {
+        } else {
             detail_tv_pm25.setText(weather.getAqi().getCity().getPm25());
             detail_tv_pm10.setText(weather.getAqi().getCity().getPm10());
             detail_tv_so2.setText(weather.getAqi().getCity().getSo2());
@@ -314,6 +334,54 @@ public class WeatherPageFragment extends Fragment {
             detail_tv_O3.setText(weather.getAqi().getCity().getO3());
             detail_tv_CO.setText(weather.getAqi().getCity().getCo());
         }
+
+        lifeInfoList = new ArrayList<>();
+        lifeInfoList.add(new LifeInfo(R.mipmap.icon_shangyi, weather.getSuggestion().getDrsg().getBrf(), weather.getSuggestion().getDrsg().getTxt(), "[穿衣指数]"));
+        lifeInfoList.add(new LifeInfo(R.mipmap.icon_ganmaozhishu, weather.getSuggestion().getDrsg().getBrf(), weather.getSuggestion().getFlu().getTxt(), "[感冒指数]"));
+        lifeInfoList.add(new LifeInfo(R.mipmap.icon_ziwaixian, weather.getSuggestion().getUv().getBrf(), weather.getSuggestion().getUv().getTxt(), "[紫外线]"));
+        lifeInfoList.add(new LifeInfo(R.mipmap.icon_yundong, weather.getSuggestion().getSport().getBrf(), weather.getSuggestion().getSport().getTxt(), "[运动指数]"));
+        lifeInfoList.add(new LifeInfo(R.mipmap.icon_xiche, weather.getSuggestion().getCw().getBrf(), weather.getSuggestion().getCw().getTxt(), "[洗车指数]"));
+        adapter = new CommonAdapter<LifeInfo>(context, lifeInfoList, R.layout.item_weatherpagefragment_life) {
+            @Override
+            public void convert(ViewHolder helper, LifeInfo item) {
+                ImageView img = helper.getView(R.id.img_life);
+                img.setImageResource(item.getPic());
+                helper.setText(R.id.tv_name, item.getName());
+                helper.setText(R.id.tv_grade, item.getGrade());
+                helper.setText(R.id.tv_content, item.getContent());
+            }
+        };
+        lv_life.setAdapter(adapter);
+        setListViewHeightBasedOnChildren(lv_life);
+        lv_life.setFocusable(false);
+    }
+
+    /**
+     * 计算listView的高度
+     *
+     * @param listView
+     */
+    public void setListViewHeightBasedOnChildren(ListView listView) {
+        // 获取ListView对应的Adapter
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
+            // listAdapter.getCount()返回数据项的数目
+            View listItem = listAdapter.getView(i, null, listView);
+            // 计算子项View 的宽高
+            listItem.measure(0, 0);
+            // 统计所有子项的总高度
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        // listView.getDividerHeight()获取子项间分隔符占用的高度
+        // params.height最后得到整个ListView完整显示需要的高度
+        listView.setLayoutParams(params);
     }
 
     /**
@@ -328,6 +396,12 @@ public class WeatherPageFragment extends Fragment {
             cityList.add(city);
         }
     }
+
+    @Override
+    public void onRefresh() {
+        handler.sendEmptyMessageDelayed(ConstantUtils.REFRESH_DATA,2000);
+    }
+
     class WeatherPageFragmentHandler extends Handler {
 
         WeakReference<WeatherPageFragment> weakReference;
@@ -342,6 +416,10 @@ public class WeatherPageFragment extends Fragment {
             switch (msg.what) {
                 case ConstantUtils.WEATHERPAGEFRRAGMENT_GET_DATA:
                     upDataView();
+                    mSwipeLayout.setRefreshing(false);
+                    break;
+                case ConstantUtils.REFRESH_DATA:
+                    doRequestData(cityList.get(FragmentPagerItem.getPosition(getArguments())).getCityName());
                     break;
             }
         }

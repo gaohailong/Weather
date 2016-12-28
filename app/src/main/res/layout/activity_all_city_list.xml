@@ -16,7 +16,7 @@
             android:padding="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="城市列表"
+            android:text="@string/city_list"
             android:textSize="23sp"
             android:layout_centerInParent="true"/>
 
@@ -24,8 +24,8 @@
             android:id="@+id/imageView1"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:contentDescription="@string/image_notify"
             android:src="@drawable/btn_homeasup_default"
             android:onClick="back_click"/>
 
@@ -37,9 +37,11 @@
 
         <EditText
             android:id="@+id/searchEdit"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:hint="@string/search_city"
+            android:labelFor="@+id/searchEdit"
             android:ems="10" />
         <TextView
             android:layout_width="0dp"
@@ -51,6 +53,7 @@
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:onClick="search_click"
+            android:contentDescription="@string/image_notify"
             android:src="@drawable/biz_news_column_subscribe_search_icon" />
 
     </LinearLayout>
@@ -62,7 +65,7 @@
         <ListView
             android:id="@+id/city_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
+            android:layout_height="match_parent"/>
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
