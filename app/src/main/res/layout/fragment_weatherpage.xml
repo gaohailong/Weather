@@ -609,7 +609,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="2"
                                 android:text="PM2.5"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
@@ -644,7 +644,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="PM10"
-                                android:layout_weight="1"
+                                android:layout_weight="2"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
                             <TextView
@@ -677,15 +677,16 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="PMSO2"
-                                android:layout_weight="1"
+                                android:text="SO2"
+                                android:layout_weight="3"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
                             <TextView
                                 android:id="@+id/detail_tv_so2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="19"                        android:layout_weight="1"
+                                android:text="19"
+                                android:layout_weight="1"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
                         </LinearLayout>
@@ -719,7 +720,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="3"
                                 android:text="NO2"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
@@ -754,7 +755,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="O3"
-                                android:layout_weight="1"
+                                android:layout_weight="4"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
                             <TextView
@@ -788,14 +789,15 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="CO"
-                                android:layout_weight="1"
+                                android:layout_weight="3"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
                             <TextView
                                 android:id="@+id/detail_tv_CO"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="19"                        android:layout_weight="1"
+                                android:text="19"
+                                android:layout_weight="1"
                                 android:textColor="#ffffff"
                                 android:textSize="18sp"/>
                         </LinearLayout>
