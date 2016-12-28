@@ -18,5 +18,12 @@
     <string name="city_list">城市列表</string>
     <!--城市管理-->
     <string name="city_manager">城市管理</string>
+    <string name="widget_time">10:35</string>
+    <string name="widget_temp">1°C</string>
+    <string name="widget_aqi">空气质量:良</string>
+    <string name="widget_cond">晴</string>
+    <string name="widget_city">昌平</string>
+    <string name="widget_suggest">穿衣建议</string>
+    <string name="widget_wind">微风</string>
 
 </resources>

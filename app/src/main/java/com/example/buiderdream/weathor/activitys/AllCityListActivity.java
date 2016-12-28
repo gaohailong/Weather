@@ -56,21 +56,36 @@ public class AllCityListActivity extends BaseActivity {
     /**
      * 异步任务结束后通知进行数据库添加操作，只在第一次执行添加
      */
-    Handler handler = new Handler(){
+    private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what ==1){
                 if (cityDB.findCitys().size()==0){
-                    for (int i = 0; i < cityInfos.size(); i++) {
-                        cityDB.AddCitys(cityInfos.get(i));
-                    }
+                    WriteToDB();
                 }
-                notifyListAdapter();
 
             }
         }
     };
+
+    private void WriteToDB() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < cityInfos.size(); i++) {
+                    cityDB.AddCitys(cityInfos.get(i));
+                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        notifyListAdapter();
+                    }
+                });
+            }
+        }).start();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,16 +100,11 @@ public class AllCityListActivity extends BaseActivity {
      */
     private void initListView() {
 
-        if (!dbFile.exists()||cityDB.findCitys().size()==0) {
+        if (!dbFile.exists()||dbFile.length()==0) {
             doRequestData();
         }else{
-            pro_all_city.setVisibility(View.GONE);
             notifyListAdapter();
         }
-
-
-
-
 
     }
 

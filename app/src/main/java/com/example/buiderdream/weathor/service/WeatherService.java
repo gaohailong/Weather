@@ -111,7 +111,7 @@ public class WeatherService extends Service {
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroy(  ) {
         super.onDestroy();
         timer = null;
         timer2 = null;
